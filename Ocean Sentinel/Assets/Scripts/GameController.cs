@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
     // This is the amount of time between each enemy being spawned.
     private float spawnWait;
     // This is the amount of Gold the Player has.
+    private float numbWaves;
 
 
     // Determinds if the scene can be restarted.
@@ -23,7 +24,7 @@ public class GameController : MonoBehaviour {
     // Is the game over?
     private bool gameOver;
     // Show I spawn the next wave?
-    private bool spawnWave;
+    public bool spawnWave;
 
     // The UI text element for restart.
     [SerializeField]
@@ -34,6 +35,13 @@ public class GameController : MonoBehaviour {
     // The UI text for selection.
     [SerializeField]
     private Text selectionText;
+    // The UI text for the wave.
+    [SerializeField]
+    private Text waveText;
+
+    // Location Enemies spawn at.
+    [SerializeField]
+    private Vector3 enemLoc;
 
     // These are the power-up buttons.
     [SerializeField]
@@ -50,6 +58,7 @@ public class GameController : MonoBehaviour {
         startWait = 3;
         spawnWait = 1;
         numbEnemies = 5;
+        numbWaves = 1;
 
         restart = false;
         gameOver = false;
@@ -57,18 +66,14 @@ public class GameController : MonoBehaviour {
 
         restartText.text = "";
         gameOverText.text = "";
-        selectionText.text = "";
-
-        UIButton1.interactable = false;
-        UIButton2.interactable = false;
-        UIButton3.interactable = false;
-        UIButton4.interactable = false;
 
         StartCoroutine(SpawnWaves());
 	}
 	
 	void Update ()
     {
+        waveText.text = "Wave: " + numbWaves;
+
         if (restart)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -82,6 +87,11 @@ public class GameController : MonoBehaviour {
             restartText.text = "Press 'R' for Restart";
             restart = true;
         }
+
+        if (numbWaves > 6)
+        {
+            YouWin();
+        }
     }
 
     // This couroutine will spawn the enemies in the game.
@@ -92,24 +102,34 @@ public class GameController : MonoBehaviour {
         // Spawn the wave.
         while(spawnWave)
         {
+            UIButton1.interactable = false;
+            UIButton2.interactable = false;
+            UIButton3.interactable = false;
+            UIButton4.interactable = false;
+            selectionText.text = "";
+
             for (int i = 0; i < numbEnemies; i++)
             {
-                Vector3 spawnPosition = new Vector3();
+                Vector3 spawnPosition = enemLoc;
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(EnemyPre, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }
+            // Increase the wave count.
+            numbWaves++;
+            // Increase the number of enemies next wave.
+            numbEnemies *= 2;
             // Pause the couroutine.
             spawnWave = false;
+        }
 
-            if (FindObjectsOfType())
-            {
-                UIButton1.interactable = true;
-                UIButton2.interactable = true;
-                UIButton3.interactable = true;
-                UIButton4.interactable = true;
-                selectionText.text = "Select Upgrade: ";
-            }
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+        {
+            UIButton1.interactable = true;
+            UIButton2.interactable = true;
+            UIButton3.interactable = true;
+            UIButton4.interactable = true;
+            selectionText.text = "Select Upgrade: ";
         }
     }
 
@@ -117,5 +137,10 @@ public class GameController : MonoBehaviour {
     {
         gameOverText.text = "Game Over!";
         gameOver = true;
+    }
+
+    public void YouWin()
+    {
+        SceneManager.LoadScene("Win");
     }
 }
