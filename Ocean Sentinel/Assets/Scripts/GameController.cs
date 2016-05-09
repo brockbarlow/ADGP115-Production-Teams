@@ -31,6 +31,9 @@ public class GameController : MonoBehaviour {
     // The UI text element for game over.
     [SerializeField]
     private Text gameOverText;
+    // The UI text for selection.
+    [SerializeField]
+    private Text selectionText;
 
     // These are the power-up buttons.
     [SerializeField]
@@ -54,6 +57,7 @@ public class GameController : MonoBehaviour {
 
         restartText.text = "";
         gameOverText.text = "";
+        selectionText.text = "";
 
         UIButton1.interactable = false;
         UIButton2.interactable = false;
@@ -97,6 +101,15 @@ public class GameController : MonoBehaviour {
             }
             // Pause the couroutine.
             spawnWave = false;
+
+            if (FindObjectsOfType())
+            {
+                UIButton1.interactable = true;
+                UIButton2.interactable = true;
+                UIButton3.interactable = true;
+                UIButton4.interactable = true;
+                selectionText.text = "Select Upgrade: ";
+            }
         }
     }
 
