@@ -57,6 +57,8 @@ public class GameController : MonoBehaviour {
     private GameObject UIButton3;
     [SerializeField]
     private GameObject UIButton4;
+    [SerializeField]
+    private GameObject SkipButton;
 
     void Start ()
     {
@@ -72,6 +74,13 @@ public class GameController : MonoBehaviour {
 
         restartText.text = "";
         gameOverText.text = "";
+
+        UIButton1.SetActive(false);
+        UIButton2.SetActive(false);
+        UIButton3.SetActive(false);
+        UIButton4.SetActive(false);
+        SkipButton.SetActive(false);
+        selectionText.text = "";
 
         StartCoroutine(SpawnWaves());
 	}
@@ -113,6 +122,7 @@ public class GameController : MonoBehaviour {
             UIButton2.SetActive(false);
             UIButton3.SetActive(false);
             UIButton4.SetActive(false);
+            SkipButton.SetActive(false);
             selectionText.text = "";
 
             for (int i = 0; i < numbEnemies; i++)
@@ -136,6 +146,7 @@ public class GameController : MonoBehaviour {
             UIButton2.SetActive(true);
             UIButton3.SetActive(true);
             UIButton4.SetActive(true);
+            SkipButton.SetActive(true);
             selectionText.text = "Select Upgrade: ";
         }
     }
