@@ -19,26 +19,18 @@ public class PlayerMovement : MonoBehaviour
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrowkeys
 
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		transform.Rotate(0, Movement, 0);
+		transform.Rotate(0, Movement * 4, 0);
 
+		transform.localPosition = new Vector3(Mathf.Clamp(transform.position.x, -1.5f, 1.5f) * Movement, 0, Movement);
 		Vector3 speed = new Vector3(Movement, 0, 0);
-		transform.localPosition = new Vector3(Mathf.Clamp(transform.localPosition.x, -1.6f, 1.6f) * Movement, 0, 0);
 		
+		//transform.position = transform.parent.position;
 		//transform.localRotation = Quaternion.Euler(0, Movement, 0);
 
-		speed = transform.rotation * speed;
+		speed = transform.localRotation * speed;
 
 		CharacterController playerMotion = GetComponent<CharacterController>();
 		playerMotion.Move(speed);
-
-		if (transform.position.x > 1.55f || transform.position.x < -1.55f)
-		{
-			playerMotion.detectCollisions = true;
-		}
-		else
-		{
-			playerMotion.detectCollisions = false;
-		}
 
 		Debug.Log(transform.position);
 	}
