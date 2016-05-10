@@ -4,10 +4,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 	public float MoveVelocity;
-	public GameObject Temp;
-	//float MaxValue = 1.55f;
-	//float MinValue = -1.55f;
-
+	//public GameObject Temp;
 
 	// Use this for initialization
 	void Start()
@@ -21,25 +18,20 @@ public class PlayerMovement : MonoBehaviour
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrowkeys
 
-
-		float Turn = Input.GetAxis("Horizontal") * MoveVelocity;
-		transform.Rotate(0, Turn, 0);
-
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		//transform.localRotation = Quaternion.Euler(Movement + 1, 0, 0);
-		//transform.Rotate(0, Movement, 0);
-		CharacterController playerMotion = GetComponent<CharacterController>();
+		transform.Rotate(0, Movement, 0);
 
 		Vector3 speed = new Vector3(Movement, 0, 0);
-		//Vector3 Limitation = new Vector3(1.6f, 0, 1.6f);
-		//Bounds Stopping = new Bounds(Vector3.zero, Limitation);
+		transform.localPosition = new Vector3(Mathf.Clamp(transform.localPosition.x, -1.6f, 1.6f) * Movement, 0, 0);
+		
+		//transform.localRotation = Quaternion.Euler(0, Movement, 0);
 
-		speed = transform.localRotation * speed;
+		speed = transform.rotation * speed;
 
+		CharacterController playerMotion = GetComponent<CharacterController>();
 		playerMotion.Move(speed);
-		//playerMotion.center = transform.position;
 
-		if (Temp.transform.position.x > 1.55f || Temp.transform.position.x < -1.55f)
+		if (transform.position.x > 1.55f || transform.position.x < -1.55f)
 		{
 			playerMotion.detectCollisions = true;
 		}
@@ -48,6 +40,6 @@ public class PlayerMovement : MonoBehaviour
 			playerMotion.detectCollisions = false;
 		}
 
-		Debug.Log(playerMotion.detectCollisions);
+		Debug.Log(transform.position);
 	}
 }
