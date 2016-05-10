@@ -23,17 +23,9 @@ public class GameController : MonoBehaviour {
 
     // Determinds if the scene can be restarted.
     private bool restart;
-    // Is the game over?
-    private bool gameOver;
     // Show I spawn the next wave?
     public bool spawnWave;
 
-    // The UI text element for restart.
-    [SerializeField]
-    private Text restartText;
-    // The UI text element for game over.
-    [SerializeField]
-    private Text gameOverText;
     // The UI text for selection.
     [SerializeField]
     private Text selectionText;
@@ -69,11 +61,7 @@ public class GameController : MonoBehaviour {
         Gold = 0;
 
         restart = false;
-        gameOver = false;
         spawnWave = true;
-
-        restartText.text = "";
-        gameOverText.text = "";
 
         UIButton1.SetActive(false);
         UIButton2.SetActive(false);
@@ -89,20 +77,6 @@ public class GameController : MonoBehaviour {
     {
         waveText.text = "Wave: " + numbWaves;
         goldText.text = "Gold: " + Gold;
-
-        if (restart)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-        }
-
-        if (gameOver)
-        {
-            restartText.text = "Press 'R' for Restart";
-            restart = true;
-        }
 
         if (numbWaves > 6)
         {
@@ -153,8 +127,7 @@ public class GameController : MonoBehaviour {
 
     public void GameOver()
     {
-        gameOverText.text = "Game Over!";
-        gameOver = true;
+        SceneManager.LoadScene("GameOver");
     }
 
     public void YouWin()
