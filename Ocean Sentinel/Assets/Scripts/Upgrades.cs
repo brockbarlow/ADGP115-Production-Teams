@@ -4,31 +4,51 @@ using System.Collections;
 public class Upgrades : MonoBehaviour {
 
     [SerializeField]
+    private GameObject GC;
+    [SerializeField]
     private GameObject TheBase;
     [SerializeField]
     private GameObject PM;
 	
-	void Repair()
+	public void Repair()
     {
-        TheBase.GetComponent<Base>().HP += 200;
-        if (TheBase.GetComponent<Base>().HP > TheBase.GetComponent<Base>().max_HP)
+        if (GC.GetComponent<GameController>().Gold >= 30)
         {
-            TheBase.GetComponent<Base>().HP = TheBase.GetComponent<Base>().max_HP;
+            TheBase.GetComponent<Base>().HP += 200;
+            if (TheBase.GetComponent<Base>().HP > TheBase.GetComponent<Base>().max_HP)
+            {
+                TheBase.GetComponent<Base>().HP = TheBase.GetComponent<Base>().max_HP;
+            }
+            GC.GetComponent<GameController>().Gold -= 30;
+            GC.GetComponent<GameController>().spawnWave = true;
+            GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         }
     }
 
-    void Armor()
+    public void Armor()
     {
 
     }
 
-    void Speed()
+    public void Speed()
     {
-        PM.GetComponent<PlayerMovement>().MoveVelocity += 5;
+        if (GC.GetComponent<GameController>().Gold >= 15)
+        {
+            PM.GetComponent<PlayerMovement>().MoveVelocity += 5;
+            GC.GetComponent<GameController>().Gold -= 15;
+            GC.GetComponent<GameController>().spawnWave = true;
+            GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
+        }
     }
 
-    void Rate()
+    public void Rate()
     {
 
+    }
+
+    public void None()
+    {
+        GC.GetComponent<GameController>().spawnWave = true;
+        GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
     }
 }
