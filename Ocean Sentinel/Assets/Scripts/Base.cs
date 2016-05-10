@@ -3,12 +3,14 @@ using System.Collections;
 
 public class Base : MonoBehaviour {
 
+    public float max_HP;
     public float HP;
     public GameController GC;
 
 	void Start () {
         GC = FindObjectOfType<GameController>();
-        HP = 500;
+        max_HP = 500;
+        HP = max_HP;
 	}
 
     void Update()

@@ -3,15 +3,18 @@ using System.Collections;
 
 public class Upgrades : MonoBehaviour {
 
-	// Use this for initialization
-	void Start ()
-    {
-	
-	}
+    [SerializeField]
+    private GameObject TheBase;
+    [SerializeField]
+    private GameObject PM;
 	
 	void Repair()
     {
-
+        TheBase.GetComponent<Base>().HP += 200;
+        if (TheBase.GetComponent<Base>().HP > TheBase.GetComponent<Base>().max_HP)
+        {
+            TheBase.GetComponent<Base>().HP = TheBase.GetComponent<Base>().max_HP;
+        }
     }
 
     void Armor()
@@ -21,7 +24,7 @@ public class Upgrades : MonoBehaviour {
 
     void Speed()
     {
-
+        PM.GetComponent<PlayerMovement>().MoveVelocity += 5;
     }
 
     void Rate()
