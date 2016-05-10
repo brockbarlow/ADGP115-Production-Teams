@@ -26,9 +26,6 @@ public class GameController : MonoBehaviour {
     // Show I spawn the next wave?
     public bool spawnWave;
 
-    // The UI text for selection.
-    [SerializeField]
-    private Text selectionText;
     // The UI text for the wave.
     [SerializeField]
     private Text waveText;
@@ -68,7 +65,6 @@ public class GameController : MonoBehaviour {
         UIButton3.SetActive(false);
         UIButton4.SetActive(false);
         SkipButton.SetActive(false);
-        selectionText.text = "";
 
         StartCoroutine(SpawnWaves());
 	}
@@ -78,42 +74,6 @@ public class GameController : MonoBehaviour {
         waveText.text = "Wave: " + numbWaves;
         goldText.text = "Gold: " + Gold;
 
-        if (numbWaves > 6)
-        {
-            YouWin();
-        }
-    }
-
-    // This couroutine will spawn the enemies in the game.
-    IEnumerator SpawnWaves()
-    {
-        // I wait a sec before starting this while loop. Why? For courtesy, the player is about to be stormed with wave after wave of enemies!
-        yield return new WaitForSeconds(startWait);
-        // Spawn the wave.
-        while(spawnWave)
-        {
-            UIButton1.SetActive(false);
-            UIButton2.SetActive(false);
-            UIButton3.SetActive(false);
-            UIButton4.SetActive(false);
-            SkipButton.SetActive(false);
-            selectionText.text = "";
-
-            for (int i = 0; i < numbEnemies; i++)
-            {
-                Vector3 spawnPosition = enemLoc;
-                Quaternion spawnRotation = Quaternion.identity;
-                Instantiate(EnemyPre, spawnPosition, spawnRotation);
-                yield return new WaitForSeconds(spawnWait);
-            }
-            // Increase the wave count.
-            numbWaves++;
-            // Increase the number of enemies next wave.
-            numbEnemies *= 2;
-            // Pause the couroutine.
-            spawnWave = false;
-        }
-
         if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
         {
             UIButton1.SetActive(true);
@@ -121,8 +81,42 @@ public class GameController : MonoBehaviour {
             UIButton3.SetActive(true);
             UIButton4.SetActive(true);
             SkipButton.SetActive(true);
-            selectionText.text = "Select Upgrade: ";
         }
+
+        if (numbWaves > 6)
+        {
+            YouWin();
+        }
+    }
+
+    // This couroutine will spawn the enemies in the game.
+    public IEnumerator SpawnWaves()
+    {
+        // I wait a sec before starting this while loop. Why? For courtesy, the player is about to be stormed with wave after wave of enemies!
+        yield return new WaitForSeconds(startWait);
+        // Spawn the wave.
+            while (spawnWave)
+            {
+                UIButton1.SetActive(false);
+                UIButton2.SetActive(false);
+                UIButton3.SetActive(false);
+                UIButton4.SetActive(false);
+                SkipButton.SetActive(false);
+
+                for (int i = 0; i < numbEnemies; i++)
+                {
+                    Vector3 spawnPosition = enemLoc;
+                    Quaternion spawnRotation = Quaternion.identity;
+                    Instantiate(EnemyPre, spawnPosition, spawnRotation);
+                    yield return new WaitForSeconds(spawnWait);
+                }
+                // Increase the wave count.
+                numbWaves++;
+                // Increase the number of enemies next wave.
+                numbEnemies *= 2;
+                // Pause the couroutine.
+                spawnWave = false;
+            }
     }
 
     public void GameOver()
