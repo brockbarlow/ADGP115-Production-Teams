@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
     // This is the amount of time between each enemy being spawned.
     private float spawnWait;
     // This is the amount of Gold the Player has.
+    public float Gold;
+    // This is the wave the Player is on.
     private float numbWaves;
 
 
@@ -38,6 +40,9 @@ public class GameController : MonoBehaviour {
     // The UI text for the wave.
     [SerializeField]
     private Text waveText;
+    // The UI text for the gold.
+    [SerializeField]
+    private Text goldText;
 
     // Location Enemies spawn at.
     [SerializeField]
@@ -45,13 +50,13 @@ public class GameController : MonoBehaviour {
 
     // These are the power-up buttons.
     [SerializeField]
-    private Button UIButton1;
+    private GameObject UIButton1;
     [SerializeField]
-    private Button UIButton2;
+    private GameObject UIButton2;
     [SerializeField]
-    private Button UIButton3;
+    private GameObject UIButton3;
     [SerializeField]
-    private Button UIButton4;
+    private GameObject UIButton4;
 
     void Start ()
     {
@@ -59,6 +64,7 @@ public class GameController : MonoBehaviour {
         spawnWait = 1;
         numbEnemies = 5;
         numbWaves = 1;
+        Gold = 0;
 
         restart = false;
         gameOver = false;
@@ -73,6 +79,7 @@ public class GameController : MonoBehaviour {
 	void Update ()
     {
         waveText.text = "Wave: " + numbWaves;
+        goldText.text = "Gold: " + Gold;
 
         if (restart)
         {
@@ -102,10 +109,10 @@ public class GameController : MonoBehaviour {
         // Spawn the wave.
         while(spawnWave)
         {
-            UIButton1.interactable = false;
-            UIButton2.interactable = false;
-            UIButton3.interactable = false;
-            UIButton4.interactable = false;
+            UIButton1.SetActive(false);
+            UIButton2.SetActive(false);
+            UIButton3.SetActive(false);
+            UIButton4.SetActive(false);
             selectionText.text = "";
 
             for (int i = 0; i < numbEnemies; i++)
@@ -125,10 +132,10 @@ public class GameController : MonoBehaviour {
 
         if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
         {
-            UIButton1.interactable = true;
-            UIButton2.interactable = true;
-            UIButton3.interactable = true;
-            UIButton4.interactable = true;
+            UIButton1.SetActive(true);
+            UIButton2.SetActive(true);
+            UIButton3.SetActive(true);
+            UIButton4.SetActive(true);
             selectionText.text = "Select Upgrade: ";
         }
     }
