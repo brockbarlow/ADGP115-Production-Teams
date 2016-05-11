@@ -11,11 +11,15 @@ public class EnemyAI : MonoBehaviour {
 
     // Players Transformer Will be used to track the players location 
     Transform @base;
+    //Instance so i can reffer wether or not it has found the wall.
+    GameObject wall;
     NavMeshAgent navMash;
      
 	// Use this for initialization
 	void Start () {
         @base = GameObject.FindGameObjectWithTag("Player").transform;
+
+        wall = GameObject.FindGameObjectWithTag("Wall");
 
         navMash = GetComponent<NavMeshAgent>();
 
@@ -33,5 +37,12 @@ public class EnemyAI : MonoBehaviour {
             if(@base.GetComponent<BaseHPScript>().baseCurrentHP  > 0)
                 navMash.SetDestination(@base.position); 
         
+    }
+    // Check for collider that the object comes in contact with 
+    void OnTriggerEnter(Collider collision) {
+        if (collision.gameObject == wall)
+            navMash.enabled = false;
+        else
+            navMash.enabled = true;
     }
 }
