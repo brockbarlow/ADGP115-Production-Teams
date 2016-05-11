@@ -126,7 +126,7 @@ public class GameController : MonoBehaviour {
                     Quaternion spawnRotation = Quaternion.identity;
                     Instantiate(EnemyPre, spawnPosition, spawnRotation);
                     g++;
-                    if (g > spawnPoints.Length)
+                    if (g >= spawnPoints.Length)
                     {
                          g = 0;
                     }
