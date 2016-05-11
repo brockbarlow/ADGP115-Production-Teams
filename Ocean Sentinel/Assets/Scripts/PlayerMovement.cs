@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 	public float MoveVelocity;
-	//public GameObject Temp;
 
 	// Use this for initialization
 	void Start()
@@ -21,13 +20,8 @@ public class PlayerMovement : MonoBehaviour
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
 		transform.Rotate(0, Movement * 4, 0);
 
-		transform.localPosition = new Vector3(Mathf.Clamp(transform.position.x, -1.5f, 1.5f) * Movement, 0, Movement);
 		Vector3 speed = new Vector3(Movement, 0, 0);
-		
-		//transform.position = transform.parent.position;
-		//transform.localRotation = Quaternion.Euler(0, Movement, 0);
-
-		speed = transform.localRotation * speed;
+		speed = transform.localRotation * speed - transform.localPosition;
 
 		CharacterController playerMotion = GetComponent<CharacterController>();
 		playerMotion.Move(speed);
