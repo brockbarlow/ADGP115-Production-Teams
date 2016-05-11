@@ -34,7 +34,7 @@ public class EnemyAI : MonoBehaviour {
     void Locate()
     {
         if(@base != null)
-            if(@base.GetComponent<Base>().HP  > 0)
+            if(@base.GetComponent<BaseHPScript>().baseCurrentHP  > 0)
                 navMash.SetDestination(@base.position); 
         
     }
