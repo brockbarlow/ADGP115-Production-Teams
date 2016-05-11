@@ -23,6 +23,8 @@ public class Projectiles : MonoBehaviour {
             Health.HP -= dmg;
         if (collision.gameObject == enemy)
             Destroy(enemy, 0f);
+        if (collision.gameObject == projectile)
+            Destroy(projectile, 0f);
     }
 	// Update is called once per frame
 	void Update () {
