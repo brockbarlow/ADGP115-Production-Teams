@@ -20,8 +20,6 @@ public class Upgrades : MonoBehaviour {
                 TheBase.GetComponent<Base>().HP = TheBase.GetComponent<Base>().max_HP;
             }
             GC.GetComponent<GameController>().Gold -= 30;
-            GC.GetComponent<GameController>().spawnWave = true;
-            GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         }
     }
 
@@ -36,8 +34,6 @@ public class Upgrades : MonoBehaviour {
         {
             PM.GetComponent<PlayerMovement>().MoveVelocity += 5;
             GC.GetComponent<GameController>().Gold -= 15;
-            GC.GetComponent<GameController>().spawnWave = true;
-            GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         }
     }
 
