@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour {
      
 	// Use this for initialization
 	void Start () {
-        @base = GameObject.FindGameObjectWithTag("Player").transform;
+        @base = GameObject.FindGameObjectWithTag("Base").transform;
 
         wall = GameObject.FindGameObjectWithTag("Wall");
 
