@@ -40,7 +40,7 @@ public class Upgrades : MonoBehaviour {
     {
         if (GC.GetComponent<GameController>().Gold >= 15)
         {
-            PM.GetComponent<PlayerMovement>().MoveVelocity += 5;
+            PM.GetComponent<PlayerMovement>().MoveVelocity += 2;
             GC.GetComponent<GameController>().Gold -= 15;
         }
     }
