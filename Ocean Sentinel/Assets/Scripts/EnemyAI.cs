@@ -38,8 +38,13 @@ public class EnemyAI : MonoBehaviour {
     void Locate()
     {
         if(@base != null)
+<<<<<<< HEAD
             if(@base.GetComponent<Base>().HP  > 0)
                 navMash.SetDestination(baseTransformer.position); 
+=======
+            if(@base.GetComponent<BaseHPScript>().baseCurrentHP  > 0)
+                navMash.SetDestination(@base.position); 
+>>>>>>> refs/remotes/brockbarlow/master
         
     }
     // Check for collider that the object comes in contact with 
