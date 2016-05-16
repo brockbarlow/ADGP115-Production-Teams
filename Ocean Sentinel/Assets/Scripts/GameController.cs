@@ -97,6 +97,8 @@ public class GameController : MonoBehaviour {
             UIButton3.SetActive(true);
             UIButton4.SetActive(true);
             SkipButton.SetActive(true);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = 1;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = 1;
         }
 
         if (numbWaves > 6)

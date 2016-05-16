@@ -47,7 +47,11 @@ public class Upgrades : MonoBehaviour {
 
     public void Rate()
     {
-
+        if (GC.GetComponent<GameController>().Gold >= 15)
+        {
+            PM.GetComponent<PlayerMovement>().projectileRate -= .5f;
+            GC.GetComponent<GameController>().Gold -= 15;
+        }
     }
 
     public void None()
