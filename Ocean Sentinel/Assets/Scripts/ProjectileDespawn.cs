@@ -9,7 +9,7 @@ public class ProjectileDespawn : MonoBehaviour {
 	void Update ()
 	{
 		projectileTime += Time.deltaTime;
-		if(projectileTime >= 3.0f)
+		if(projectileTime >= 10.0f)
 		{
 			Destroy(this.gameObject);
 		}
