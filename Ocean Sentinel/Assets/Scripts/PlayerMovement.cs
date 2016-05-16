@@ -5,6 +5,18 @@ public class PlayerMovement : MonoBehaviour
 {
 	public float MoveVelocity;
 	public GameObject Temp;
+	public GameObject Attack_Prefab;
+	public float projectileVelocity;
+	public float projectileRate;
+	private float nextProjectile = 0.0F;
+
+	void FireProjectile()
+	{
+		GameObject playerProjectile = (GameObject)Instantiate(Attack_Prefab, transform.position + transform.right, transform.rotation);
+		playerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
+		Destroy(playerProjectile, 4.0f);
+	}
+
 
 	// Use this for initialization
 	void Start()
@@ -22,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
 		//transform.Rotate(0, Movement * 4, 0);
 		transform.RotateAround(Temp.transform.position, Vector3.up, Movement * 4);
 
+		if(Input.GetButton("Fire1") && Time.time > nextProjectile)
+		{
+			nextProjectile = Time.time + projectileRate;
+			FireProjectile();
+		}
 		//Vector3 speed = new Vector3(Movement, 0, 0);
 
 		//speed = transform.rotation * speed;
