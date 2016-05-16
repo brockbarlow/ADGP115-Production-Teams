@@ -24,9 +24,6 @@ public class GameController : MonoBehaviour {
     // This is the wave the Player is on.
     private float numbWaves;
 
-
-    // Determinds if the scene can be restarted.
-    private bool restart;
     // Show I spawn the next wave?
     public bool spawnWave;
 
@@ -68,7 +65,6 @@ public class GameController : MonoBehaviour {
         numbWaves = 1;
         Gold = 0;
 
-        restart = false;
         spawnWave = true;
 
         UIButton1.SetActive(false);
