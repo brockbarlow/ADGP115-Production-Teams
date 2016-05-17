@@ -13,6 +13,10 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject EnemyPre;
 
+    // Use for the Leaderboard Serializing.
+    [SerializeField]
+    private GameObject Leader;
+
     // This is the wait before the while loop in the couroutine begins.
     private float startWait;
     // This is the number of enemies that will be spawned.
@@ -141,6 +145,9 @@ public class GameController : MonoBehaviour {
 
     public void GameOver()
     {
+        Leader.GetComponent<Serializer>().Scores.Add(numbWaves);
+        Leader.GetComponent<Serializer>().Scores.Sort();
+        Leader.GetComponent<Serializer>().Save();
         SceneManager.LoadScene("GameOver");
     }
 
