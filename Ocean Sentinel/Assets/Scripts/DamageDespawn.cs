@@ -4,14 +4,14 @@ using System.Collections;
 public class DamageDespawn : MonoBehaviour
 {
 	float bulletLife;
-	Base Temp;
+	//Accesses Base.cs and creates an object from it
+	Base Objective;
 	float damage = 10.0f;
 
 	// Update is called once per frame
 	void Update()
 	{
-		bulletLife += Time.deltaTime;
-		if (bulletLife >= 10.0f)
+		if (Time.deltaTime >= 7.0f)
 		{
 			Destroy(this.gameObject);
 		}
@@ -23,14 +23,14 @@ public class DamageDespawn : MonoBehaviour
 		if (col.gameObject.tag == "Base")
 		{
 			Destroy(gameObject);
-			Temp = col.gameObject.GetComponent<Base>();
-			if (Temp.Armor >= 0)
+			Objective = col.gameObject.GetComponent<Base>();
+			if (Objective.Armor >= 0)
 			{
-				Temp.Armor -= damage;
+				Objective.Armor -= damage;
 			}
-			else if(Temp.Armor <= 0)
+			else if(Objective.Armor <= 0)
 			{
-				Temp.HP -= damage;
+				Objective.HP -= damage;
 			}
 		}
 	}
