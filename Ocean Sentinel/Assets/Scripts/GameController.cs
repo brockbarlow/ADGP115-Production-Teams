@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour {
     public void GameOver()
     {
         Leader.GetComponent<Serializer>().Scores.Add(numbWaves);
-        Leader.GetComponent<Serializer>().Scores.Sort();
+        Leader.GetComponent<Serializer>().Scores.Sort(MySorter);
         Leader.GetComponent<Serializer>().Save();
         SceneManager.LoadScene("GameOver");
     }
@@ -149,5 +149,15 @@ public class GameController : MonoBehaviour {
     public void YouWin()
     {
         SceneManager.LoadScene("Win");
+    }
+
+    public int MySorter(float a, float b)
+    {
+        if (a > b)
+            return -1;
+        else if(a < b)
+            return 1;
+
+        return 0;
     }
 }
