@@ -4,17 +4,15 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 	public float MoveVelocity;
-	public GameObject Temp;
-	public GameObject Attack_Prefab;
 	public float projectileVelocity;
 	public float projectileRate;
 	private float nextProjectile = 0.0F;
 	
 	void FireProjectile()
 	{
-		//Spawns a cloned game object that's instantiated from a prefab
-		GameObject playerProjectile = Instantiate(Attack_Prefab);
-		
+		//Instantiates a game object by loading a prefab located in the Resources folder
+		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
+
 		//Places the new game object relative to the player object in relation to the base object
 		playerProjectile.transform.position = transform.position + transform.right;
 		
@@ -37,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		GameObject Center = GameObject.Find("Base");
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrowkeys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		transform.RotateAround(Temp.transform.position, Vector3.up, Movement * 4);
-		
-		if(Input.GetButton("Fire1") && Time.time > nextProjectile)
+		transform.RotateAround(Center.transform.position, Vector3.up, Movement * 4);
+
+		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
