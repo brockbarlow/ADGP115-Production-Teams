@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject Leader;
 
-    // This is the wait before the while loop in the couroutine begins.
-    private float startWait;
     // This is the number of enemies that will be spawned.
     private float numbEnemies;
     // This is the amount of time between each enemy being spawned.
@@ -63,7 +61,6 @@ public class GameController : MonoBehaviour {
 
     void Start ()
     {
-        startWait = 3;
         spawnWait = 1;
         numbEnemies = 5;
         numbWaves = 1;
@@ -110,8 +107,6 @@ public class GameController : MonoBehaviour {
     // This couroutine will spawn the enemies in the game.
     public IEnumerator SpawnWaves()
     {
-        // I wait a sec before starting this while loop. Why? For courtesy, the player is about to be stormed with wave after wave of enemies!
-        yield return new WaitForSeconds(startWait);
         // Spawn the wave.
             while (spawnWave)
             {
