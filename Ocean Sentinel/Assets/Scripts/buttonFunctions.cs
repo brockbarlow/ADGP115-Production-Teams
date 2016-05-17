@@ -10,6 +10,11 @@ public class buttonFunctions : MonoBehaviour {
         SceneManager.LoadScene("Game");
     }
 
+    public void viewBoard() //this function is used to load the leaderboard scene.
+    {
+        SceneManager.LoadScene("Leaderboard");
+    }
+
     public void exitGame() //this function is used to exit the game.
     {
         Application.Quit();
