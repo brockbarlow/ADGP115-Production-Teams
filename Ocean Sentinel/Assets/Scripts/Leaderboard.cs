@@ -50,7 +50,7 @@ public class Leaderboard : MonoBehaviour {
             Text UIElement = Instantiate(text, text.transform.position, text.transform.rotation) as Text;
             UIElement.transform.parent = Can.transform;
             UIElement.transform.position = new Vector3(UIElement.transform.position.x, UIElement.transform.position.y - 60 * Distance, UIElement.transform.position.z);
-            UIElement.text = i + ".     " + Scores[i];
+            UIElement.text = (i + 1) + ".     " + Scores[i];
             Distance++;
         }
     }
