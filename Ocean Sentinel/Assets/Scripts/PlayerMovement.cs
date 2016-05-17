@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-	public float MoveVelocity = 1.0f;
+	public float MoveVelocity;
 	public float projectileVelocity;
 	public float projectileRate;
 	private float nextProjectile = 0.0F;
@@ -32,7 +32,9 @@ public class PlayerMovement : MonoBehaviour
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
+		
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
+		
 
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
