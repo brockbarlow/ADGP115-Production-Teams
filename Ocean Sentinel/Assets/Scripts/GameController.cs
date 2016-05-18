@@ -96,6 +96,7 @@ public class GameController : MonoBehaviour {
             SkipButton.SetActive(true);
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = 1;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = 1;
+            DestroyAll(GameObject.FindGameObjectsWithTag("Projectile"));
         }
 
         if (numbWaves > 6)
@@ -159,5 +160,13 @@ public class GameController : MonoBehaviour {
             return 1;
 
         return 0;
+    }
+
+    void DestroyAll(GameObject[] a)
+    {
+        foreach(GameObject b in a)
+        {
+            Destroy(b);
+        }   
     }
 }
