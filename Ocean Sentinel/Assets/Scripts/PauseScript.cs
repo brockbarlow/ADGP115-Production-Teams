@@ -34,7 +34,7 @@ public class PauseScript : MonoBehaviour {
         
     }
     void Paused() {
-        //Check if the paused button has been preesed 
+        //Check if the paused button has been pressed 
         if (paused) {
             //Enables the canvas to appear on the screen
             canvas.enabled = true;
@@ -43,7 +43,7 @@ public class PauseScript : MonoBehaviour {
         }
         //Check if the paused button 
         if (!paused) {
-            //Set the Conves with a clear tex t
+            //Set the Conves with a clear text
             pauseText.text = "";
             //Relinquishes time to normal state
             Time.timeScale = 1;
