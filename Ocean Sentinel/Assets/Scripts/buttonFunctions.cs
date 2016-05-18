@@ -15,6 +15,16 @@ public class buttonFunctions : MonoBehaviour {
         SceneManager.LoadScene("Leaderboard");
     }
 
+    public void returnTitle()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void viewControls()
+    {
+        SceneManager.LoadScene("Controls");
+    }
+
     public void exitGame() //this function is used to exit the game.
     {
         Application.Quit();
