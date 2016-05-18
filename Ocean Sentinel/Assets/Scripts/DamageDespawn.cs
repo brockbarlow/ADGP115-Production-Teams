@@ -24,14 +24,18 @@ public class DamageDespawn : MonoBehaviour
 		{
 			Destroy(gameObject);
 			Objective = col.gameObject.GetComponent<Base>();
-			if (Objective.Armor >= 0)
+			if (Objective.Armor > 0)
 			{
 				Objective.Armor -= damage;
 			}
-			else if(Objective.Armor <= 0)
+			else if (Objective.Armor <= 0)
 			{
 				Objective.HP -= damage;
 			}
+		}
+		else if (col.gameObject.tag == "Player")
+		{
+			Destroy(gameObject);
 		}
 	}
 }
