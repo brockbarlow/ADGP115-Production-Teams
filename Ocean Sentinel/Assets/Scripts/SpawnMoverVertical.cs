@@ -25,12 +25,12 @@ public class SpawnMoverVertical : MonoBehaviour
     {
         if (up == true)
         {
-            Lerp(0, 0, 5 * Time.deltaTime /** speed*/);
+            Lerp(0, 0, 8 * Time.deltaTime /** speed*/);
         }
 
         if (down == true)
         {
-            Lerp(0, 0, -5 * Time.deltaTime /** speed*/);
+            Lerp(0, 0, -8 * Time.deltaTime /** speed*/);
         }
 
         if (gameObject.transform.position.z <= -12)

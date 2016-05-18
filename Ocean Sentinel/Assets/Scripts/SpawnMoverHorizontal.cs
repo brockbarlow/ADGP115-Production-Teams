@@ -25,12 +25,12 @@ public class SpawnMoverHorizontal : MonoBehaviour
     {
         if (forth == true)
         {
-            Lerp(0.1f, 0, 0 * Time.deltaTime /** speed*/);
+            Lerp(0.2f, 0, 0 * Time.deltaTime /** speed*/);
         }
 
         if (back == true)
         {
-            Lerp(-0.1f, 0, 0 * Time.deltaTime /** speed*/);
+            Lerp(-0.2f, 0, 0 * Time.deltaTime /** speed*/);
         }
 
         if (gameObject.transform.position.x <= -29)
