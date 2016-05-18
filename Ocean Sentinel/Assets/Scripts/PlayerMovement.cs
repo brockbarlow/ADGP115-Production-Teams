@@ -4,10 +4,13 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 	public float MoveVelocity;
+	public float newVelocity;
 	public float projectileVelocity;
 	public float projectileRate;
+	public float newRate;
 	private float nextProjectile = 0.0F;
-	
+	public GameController GC;
+
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
@@ -24,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
 		
 		//Applies a force to the game object that changes the magnitude and direction
 		playerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
+	}
+
+	void Start()
+	{
+		GC = FindObjectOfType<GameController>();
+		MoveVelocity = 1.0f;
+		projectileRate = 1.0f;
+		newVelocity = MoveVelocity;
+		newRate = projectileRate;
 	}
 
 	// Update is called once per frame
