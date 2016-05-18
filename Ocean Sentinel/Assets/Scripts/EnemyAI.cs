@@ -14,14 +14,14 @@ public class EnemyAI : MonoBehaviour
     Transform @base;
     //Instance so i can reffer wether or not it has found the wall.
     public GameObject Prefab;
-    //Sets the location of the wanted projectile 
-    public GameObject spawnPoint;
+
+	public float attackSpeed;
     //Time between projectile  
     public float time;
     //Time till next shot 
-    public float timeCap = 5;
+    private float timeCap = 0.0f;
     //Checks when the enemy collides with the wall 
-    bool trigger = false;
+    
     //Referres to the games naviagtion mesh 
     //GameObject wall;
     NavMeshAgent navMash;
@@ -41,17 +41,23 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         Locate();
-        if (trigger)
-            EnemyShot();
-    }
+		if (navMash.enabled == false && Time.time > timeCap)
+		{
+			timeCap = Time.time + time;
+			EnemyShot();
+		}
+	}
 
     // Looks for base unless it exists or the health is greater then 0
     void Locate()
     {
-        if (@base != null)
-            if (@base.GetComponent<Base>().HP > 0)
-                navMash.SetDestination(@base.position);
-
+		if (@base != null && navMash.enabled == true)
+		{
+			if (@base.GetComponent<Base>().HP > 0)
+			{
+				navMash.SetDestination(@base.position);
+			}
+		}
     }
     // Check for collider that the object comes in contact with 
     void OnTriggerEnter(Collider collision)
@@ -59,7 +65,6 @@ public class EnemyAI : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             navMash.enabled = false;
-            trigger = true;
         }
         //else
         //    navMash.enabled = true;
@@ -69,16 +74,12 @@ public class EnemyAI : MonoBehaviour
     //If the time meets the time cap it creats another projectile 
     void EnemyShot()
     {
-        if (time > timeCap)
-        {
-            //Creats a new object/sets the location pined by the user
-            Instantiate(Prefab);
-            Prefab.transform.position = spawnPoint.transform.position + spawnPoint.transform.right;
-            Prefab.transform.localRotation = spawnPoint.transform.rotation;
-            Prefab.transform.Rotate(spawnPoint.transform.rotation.z, spawnPoint.transform.rotation.x, 90);
-            time = 0;
-        }
-        //Calculates the time between shots 
-        time += 3 * Time.deltaTime;
-    }
+		//Creats a new object/sets the location pined by the user
+		GameObject enemyProjectile = Instantiate(Prefab);
+		Vector3 Targeting = (GameObject.Find("Base").transform.position - transform.position).normalized;
+		enemyProjectile.transform.position = transform.position + transform.forward;
+		enemyProjectile.transform.localRotation = transform.rotation;
+		enemyProjectile.transform.Rotate(90, transform.rotation.x, transform.rotation.y);
+		enemyProjectile.GetComponent<Rigidbody>().AddForce(Targeting * attackSpeed, ForceMode.Force);
+	}
 }
