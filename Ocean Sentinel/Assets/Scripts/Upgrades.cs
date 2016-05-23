@@ -27,6 +27,7 @@ public class Upgrades : MonoBehaviour {
         c = cost3;
         d = cost4;
         Doit = false;
+        costText.SetActive(false);
     }
 
     void Update()
@@ -38,6 +39,7 @@ public class Upgrades : MonoBehaviour {
             c = cost3;
             d = cost4;
             Doit = false;
+            costText.SetActive(true);
         }
         costText.GetComponent<Text>().text =  "Cost: " + a + "     Cost: " + b + "     Cost: " + c + "     Cost: " + d;
     }
@@ -95,6 +97,7 @@ public class Upgrades : MonoBehaviour {
         GC.GetComponent<GameController>().spawnWave = true;
         GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         GC.GetComponent<GameController>().Doit = true;
+        costText.SetActive(false);
         Doit = true;
     }
 }
