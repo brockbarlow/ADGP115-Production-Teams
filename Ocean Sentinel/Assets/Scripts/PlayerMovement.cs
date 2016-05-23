@@ -49,13 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
 
-		//Vector3 Temp1 =new Vector3(transform.position.x + 2, 0, transform.position.z + 2);
-
-		//Vector3 TempMotion = new Vector3(0, 0, addDistance);
-		//TempMotion = transform.localRotation * TempMotion;
-
-		//transform.position = Vector3.MoveTowards(transform.position, Vector3.up, Time.deltaTime);
-
+		Vector3 TempMotion = new Vector3(addDistance, 0, 0);
+		TempMotion = transform.localRotation * TempMotion;
+		CharacterController TempControl = GetComponent<CharacterController>();
+		TempControl.Move(TempMotion);
+		
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
