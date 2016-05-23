@@ -4,7 +4,7 @@ using System.Collections;
 public class ProjectileDespawn : MonoBehaviour
 {
 	float projectileTime;
-	float enemyDrop = 15.0f;
+	float enemyDrop = 20.0f;
 	
 	// Update is called once per frame
 	void Update ()
