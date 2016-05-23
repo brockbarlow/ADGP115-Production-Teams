@@ -40,9 +40,9 @@ public class Leaderboard : MonoBehaviour {
 
     void ShowLeaderboard()
     {
-        for (int i = 0; i < Scores.Count; i++)
+        for (int i = 0; i < Scores.Count && i < 8; i++)
         {
-            if (i == Scores.Count)
+            if (i == Scores.Count || i > 8)
             {
                 break;
             }

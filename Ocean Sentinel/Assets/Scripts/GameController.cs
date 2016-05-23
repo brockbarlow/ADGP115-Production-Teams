@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour {
 
     // Show I spawn the next wave?
     public bool spawnWave;
+    // Checks to do something.
+    public bool Doit;
 
     // The UI text for the wave.
     [SerializeField]
@@ -63,10 +65,11 @@ public class GameController : MonoBehaviour {
     {
         spawnWait = 1;
         numbEnemies = 5;
-        numbWaves = 1;
+        numbWaves = 0;
         Gold = 0;
 
         spawnWave = true;
+        Doit = true;
 
         UIButton1.SetActive(false);
         UIButton2.SetActive(false);
@@ -87,7 +90,7 @@ public class GameController : MonoBehaviour {
 
 
 
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0 && Doit)
         {
             UIButton1.SetActive(true);
             UIButton2.SetActive(true);
@@ -97,6 +100,7 @@ public class GameController : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newVelocity;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newRate;
             DestroyAll(GameObject.FindGameObjectsWithTag("Projectile"));
+            Doit = false;
         }
 
         if (numbWaves > 6)
@@ -117,8 +121,10 @@ public class GameController : MonoBehaviour {
                 UIButton3.SetActive(false);
                 UIButton4.SetActive(false);
                 SkipButton.SetActive(false);
+            // Increase the wave count.
+            numbWaves++;
 
-                for (int i = 0; i < numbEnemies; i++)
+            for (int i = 0; i < numbEnemies; i++)
                 {
                     Vector3 spawnPosition = spawnPoints[g].transform.position;
                     Quaternion spawnRotation = Quaternion.identity;
@@ -130,8 +136,6 @@ public class GameController : MonoBehaviour {
                     }
                     yield return new WaitForSeconds(spawnWait);
                 }
-                // Increase the wave count.
-                numbWaves++;
                 // Increase the number of enemies next wave.
                 numbEnemies *= 2;
                 // Pause the couroutine.
