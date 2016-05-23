@@ -12,7 +12,7 @@ public class Upgrades : MonoBehaviour {
 	
 	public void Repair()
     {
-        if (GC.GetComponent<GameController>().Gold >= 30)
+        if ((GC.GetComponent<GameController>().Gold >= 30) && (TheBase.GetComponent<Base>().HP < TheBase.GetComponent<Base>().max_HP))
         {
             TheBase.GetComponent<Base>().HP += 200;
             if (TheBase.GetComponent<Base>().HP > TheBase.GetComponent<Base>().max_HP)
@@ -25,7 +25,7 @@ public class Upgrades : MonoBehaviour {
 
     public void Armor()
     {
-        if (GC.GetComponent<GameController>().Gold >= 30)
+        if ((GC.GetComponent<GameController>().Gold >= 30) && (TheBase.GetComponent<Base>().Armor < TheBase.GetComponent<Base>().max_Armor))
         {
             TheBase.GetComponent<Base>().Armor += 150;
             if (TheBase.GetComponent<Base>().Armor > TheBase.GetComponent<Base>().max_Armor)
@@ -58,5 +58,6 @@ public class Upgrades : MonoBehaviour {
     {
         GC.GetComponent<GameController>().spawnWave = true;
         GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
+        GC.GetComponent<GameController>().Doit = true;
     }
 }
