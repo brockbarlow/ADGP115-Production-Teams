@@ -45,20 +45,23 @@ public class PlayerMovement : MonoBehaviour
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
 
-		//float addDistance = Input.GetAxis("Vertical") * MoveVelocity;
+		float addDistance = Input.GetAxis("Vertical") * MoveVelocity;
 
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
 
-		//Vector3 Temp = Vector3.Cross(Vector3.up, transform.position).normalized;
-		//float Temp = (GameObject.Find("Base").transform.position - transform.position).sqrMagnitude;
+		//Vector3 Temp1 = new Vector3(transform.position.x + 2, 0, transform.position.z + 2);
 
-		//transform.position = Vector3.MoveTowards(/*GameObject.Find("Base").*/transform.position, Vector3.forward, addDistance);
+		//Vector3 TempMotion = new Vector3(0, 0, addDistance);
+		//TempMotion = transform.localRotation * TempMotion;
+
+		//transform.position = Vector3.MoveTowards(transform.position, Vector3.up, Time.deltaTime);
+		
 
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
 		}
-		//Debug.Log(Temp);
+		Debug.Log(transform.localRotation);
 	}
 }
