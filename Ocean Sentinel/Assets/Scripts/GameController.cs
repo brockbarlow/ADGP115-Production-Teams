@@ -100,6 +100,7 @@ public class GameController : MonoBehaviour {
             UIButton3.SetActive(true);
             UIButton4.SetActive(true);
             SkipButton.SetActive(true);
+            GameObject.Find("upgrades").GetComponent<Upgrades>().Active = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newVelocity;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newRate;
             DestroyAll(GameObject.FindGameObjectsWithTag("Projectile"));
