@@ -14,7 +14,8 @@ public class Upgrades : MonoBehaviour {
     private GameObject costText;
     private float cost1, cost2, cost3, cost4;
     private float a, b, c, d;
-    private bool Doit;
+    public bool Doit;
+    public bool Active;
 	
     void Start()
     {
@@ -26,13 +27,14 @@ public class Upgrades : MonoBehaviour {
         b = cost2;
         c = cost3;
         d = cost4;
-        Doit = false;
+        Doit = true;
         costText.SetActive(false);
+        Active = false;
     }
 
     void Update()
     {
-        if (GameObject.Find("NextWaveButton").active && Doit)
+        if (Active && Doit)
         {
             a = cost1;
             b = cost2;
@@ -86,7 +88,7 @@ public class Upgrades : MonoBehaviour {
     {
         if (GC.GetComponent<GameController>().Gold >= d)
         {
-            PM.GetComponent<PlayerMovement>().projectileRate -= .5f;
+            PM.GetComponent<PlayerMovement>().projectileRate -= .2f;
             GC.GetComponent<GameController>().Gold -= d;
             d *= 2;
         }
