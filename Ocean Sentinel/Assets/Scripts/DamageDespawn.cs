@@ -27,6 +27,7 @@ public class DamageDespawn : MonoBehaviour
 			if (Objective.Armor > 0)
 			{
 				Objective.Armor -= damage;
+				Objective.HP -= damage / 2;
 			}
 			else if (Objective.Armor == 0)
 			{
