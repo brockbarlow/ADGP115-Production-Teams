@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
 
+		transform.localRotation = Quaternion.Euler(0, 0, 0);
+
 		Vector3 TempMotion = new Vector3(addDistance, 0, 0);
 		TempMotion = transform.localRotation * TempMotion;
 		CharacterController TempControl = GetComponent<CharacterController>();
@@ -59,6 +61,6 @@ public class PlayerMovement : MonoBehaviour
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
 		}
-		Debug.Log(transform.localRotation);
+		//Debug.Log(transform.localRotation);
 	}
 }
