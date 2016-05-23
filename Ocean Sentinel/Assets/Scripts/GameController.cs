@@ -30,6 +30,8 @@ public class GameController : MonoBehaviour {
     public bool spawnWave;
     // Checks to do something.
     public bool Doit;
+    // Checks if we are ready to start checking.
+    private bool Ready;
 
     // The UI text for the wave.
     [SerializeField]
@@ -70,6 +72,7 @@ public class GameController : MonoBehaviour {
 
         spawnWave = true;
         Doit = true;
+        Ready = false;
 
         UIButton1.SetActive(false);
         UIButton2.SetActive(false);
@@ -90,7 +93,7 @@ public class GameController : MonoBehaviour {
 
 
 
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0 && Doit)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0 && Doit && Ready)
         {
             UIButton1.SetActive(true);
             UIButton2.SetActive(true);
@@ -101,6 +104,7 @@ public class GameController : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newRate;
             DestroyAll(GameObject.FindGameObjectsWithTag("Projectile"));
             Doit = false;
+            Ready = false;
         }
 
         if (numbWaves > 6)
@@ -136,6 +140,8 @@ public class GameController : MonoBehaviour {
                     }
                     yield return new WaitForSeconds(spawnWait);
                 }
+                // We are now ready to start checking if the enemies are dead.
+                Ready = true;
                 // Increase the number of enemies next wave.
                 numbEnemies *= 2;
                 // Pause the couroutine.
