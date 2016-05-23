@@ -32,10 +32,10 @@ public class PlayerMovement : MonoBehaviour
 	void Start()
 	{
 		GC = FindObjectOfType<GameController>();
-		MoveVelocity = 1.0f;
-		projectileRate = 1.0f;
-		newVelocity = MoveVelocity;
-		newRate = projectileRate;
+		newVelocity = 1.0f;
+		newRate = 1.0f;
+		MoveVelocity = newVelocity;
+		projectileRate = newRate;
 	}
 
 	// Update is called once per frame
@@ -44,14 +44,21 @@ public class PlayerMovement : MonoBehaviour
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		
+
+		//float addDistance = Input.GetAxis("Vertical") * MoveVelocity;
+
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
-		
+
+		//Vector3 Temp = Vector3.Cross(Vector3.up, transform.position).normalized;
+		//float Temp = (GameObject.Find("Base").transform.position - transform.position).sqrMagnitude;
+
+		//transform.position = Vector3.MoveTowards(/*GameObject.Find("Base").*/transform.position, Vector3.forward, addDistance);
 
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
 		}
+		//Debug.Log(Temp);
 	}
 }
