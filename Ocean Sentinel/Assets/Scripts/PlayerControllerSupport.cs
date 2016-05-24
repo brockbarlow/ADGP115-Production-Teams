@@ -9,7 +9,6 @@ public class PlayerControllerSupport : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0f;
-	public GameController GC;
 
 	void ControllerFire()
 	{
@@ -24,7 +23,6 @@ public class PlayerControllerSupport : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		GC = FindObjectOfType<GameController>();
 		newVelocity = 1.0f;
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
@@ -35,51 +33,61 @@ public class PlayerControllerSupport : MonoBehaviour
 	void Update ()
 	{
 		GameObject Center = GameObject.Find("Base");
-		float Movement;
-		float adjustDistance;
+		float Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
+		float adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
 		CharacterController controllerControl = GetComponent<CharacterController>();
 
-		if(Input.GetButton("A") && Time.time >= nextProjectile)
+		Vector3 changeDist = new Vector3(adjustDistance, 0, 0);
+
+		if (Input.GetButton("A") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
 			ControllerFire();
 		}
 
-		if(Input.GetAxis("LeftJoystickX") == 0.0f || Input.GetAxis("LeftJoystickY") == 0.0f)
-		{
-			MoveVelocity = 0.0f;
-		}
-
-		else if (Input.GetAxis("LeftJoystickX") <= 0.5f && Input.GetAxis("LeftJoystickX") > 0 ||
+		if (Input.GetAxis("LeftJoystickX") <= 0.5f && Input.GetAxis("LeftJoystickX") > 0 ||
 			Input.GetAxis("LeftJoystickX") >= -0.5f && Input.GetAxis("LeftJoystickX") < 0)
 		{
-			Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 2);
 		}
 
 		else if(Input.GetAxis("LeftJoystickX") > 0.5f && Input.GetAxis("LeftJoystickX") <= 1 || 
 				Input.GetAxis("LeftJoystickX") < -0.5f && Input.GetAxis("LeftJoystickX") >= -1)
 		{
-			Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 4);
 		}
-		
-		else if (Input.GetAxis("LeftJoystickY") <= 0.5f && Input.GetAxis("LeftJoystickY") > 0 ||
-			Input.GetAxis("LeftJoystickY") >= -0.5f && Input.GetAxis("LeftJoystickY") < 0)
+
+		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 0 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) < 4 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 0 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) < 4)
 		{
-			adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
-			Vector3 changeDist = new Vector3(adjustDistance * 0.5f, 0, 0);
-			changeDist = transform.localRotation * changeDist;
-			controllerControl.Move(changeDist);
+			if (Input.GetAxis("LeftJoystickY") <= 0.5f && Input.GetAxis("LeftJoystickY") > 0 ||
+			Input.GetAxis("LeftJoystickY") >= -0.5f && Input.GetAxis("LeftJoystickY") < 0)
+			{
+				changeDist = transform.localRotation * (changeDist * 0.5f);
+				controllerControl.Move(changeDist);
+			}
+
+			else if (Input.GetAxis("LeftJoystickY") > 0.5f && Input.GetAxis("LeftJoystickY") <= 1 ||
+					Input.GetAxis("LeftJoystickY") < -0.5f && Input.GetAxis("LeftJoystickY") >= -1)
+			{
+				changeDist = transform.localRotation * changeDist;
+				controllerControl.Move(changeDist);
+			}
 		}
 
-		else if (Input.GetAxis("LeftJoystickY") > 0.5f && Input.GetAxis("LeftJoystickY") <= 1 ||
-				Input.GetAxis("LeftJoystickY") < -0.5f && Input.GetAxis("LeftJoystickY") >= -1)
+		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 4 ||
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 4)
 		{
-			adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
-			Vector3 changeDist = new Vector3(adjustDistance, 0, 0);
-			changeDist = transform.localRotation * changeDist;
-			controllerControl.Move(changeDist);
+			if (Input.GetAxis("Vertical") > 0)
+			{
+				adjustDistance = 0;
+			}
+			else
+			{
+				controllerControl.Move(changeDist);
+			}
 		}
 	}
 }

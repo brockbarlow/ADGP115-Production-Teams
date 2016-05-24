@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0F;
-	//public GameController GC;
-	
 
 	void FireProjectile()
 	{
@@ -32,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start()
 	{
-		//GC = FindObjectOfType<GameController>();
 		newVelocity = 1.0f;
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
