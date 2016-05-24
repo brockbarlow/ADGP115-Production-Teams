@@ -6,7 +6,7 @@ public class DamageDespawn : MonoBehaviour
 	float bulletLife;
 	//Accesses Base.cs and creates an object from it
 	Base Objective;
-	float damage = 8.0f;
+	float damage = 10.0f;
 
 	// Update is called once per frame
 	void Update()
@@ -27,9 +27,9 @@ public class DamageDespawn : MonoBehaviour
 			if (Objective.Armor > 0)
 			{
 				Objective.Armor -= damage;
-				Objective.HP -= damage / 4;
+				Objective.HP -= 1;
 			}
-			else if (Objective.Armor == 0)
+			else if (Objective.Armor <= 0)
 			{
 				Objective.HP -= damage;
 			}
