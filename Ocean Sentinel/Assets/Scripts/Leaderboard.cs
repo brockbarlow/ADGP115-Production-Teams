@@ -24,7 +24,7 @@ public class Leaderboard : MonoBehaviour {
 
     void Update ()
     {
-        if (Input.GetKeyDown("b"))
+        if (Input.GetKeyDown("b") || Input.GetButtonDown("B"))
         {
             SceneManager.LoadScene("Main");
         }
