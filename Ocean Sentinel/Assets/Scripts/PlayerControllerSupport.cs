@@ -4,10 +4,12 @@ using System.Collections;
 public class PlayerControllerSupport : MonoBehaviour
 {
 	public float MoveVelocity;
-	private float Movement;
+	public float newVelocity;
 	public float projectileVelocity;
 	public float projectileRate;
+	public float newRate;
 	private float nextProjectile = 0.0f;
+	public GameController GC;
 
 	void ControllerFire()
 	{
@@ -22,13 +24,20 @@ public class PlayerControllerSupport : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+		GC = FindObjectOfType<GameController>();
+		newVelocity = 1.0f;
+		newRate = 1.0f;
+		MoveVelocity = newVelocity;
+		projectileRate = newRate;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		GameObject Center = GameObject.Find("Base");
+		float Movement;
+		float adjustDistance;
+		CharacterController controllerControl = GetComponent<CharacterController>();
 
 		if(Input.GetButton("A") && Time.time >= nextProjectile)
 		{
@@ -36,9 +45,9 @@ public class PlayerControllerSupport : MonoBehaviour
 			ControllerFire();
 		}
 
-		if(Input.GetAxis("LeftJoystickX") == 0.0f)
+		if(Input.GetAxis("LeftJoystickX") == 0.0f || Input.GetAxis("LeftJoystickY") == 0.0f)
 		{
-			Movement = 0.0f;
+			MoveVelocity = 0.0f;
 		}
 
 		else if (Input.GetAxis("LeftJoystickX") <= 0.5f && Input.GetAxis("LeftJoystickX") > 0 ||
@@ -47,11 +56,30 @@ public class PlayerControllerSupport : MonoBehaviour
 			Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 2);
 		}
+
 		else if(Input.GetAxis("LeftJoystickX") > 0.5f && Input.GetAxis("LeftJoystickX") <= 1 || 
 				Input.GetAxis("LeftJoystickX") < -0.5f && Input.GetAxis("LeftJoystickX") >= -1)
 		{
 			Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 4);
+		}
+		
+		else if (Input.GetAxis("LeftJoystickY") <= 0.5f && Input.GetAxis("LeftJoystickY") > 0 ||
+			Input.GetAxis("LeftJoystickY") >= -0.5f && Input.GetAxis("LeftJoystickY") < 0)
+		{
+			adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
+			Vector3 changeDist = new Vector3(adjustDistance * 0.5f, 0, 0);
+			changeDist = transform.localRotation * changeDist;
+			controllerControl.Move(changeDist);
+		}
+
+		else if (Input.GetAxis("LeftJoystickY") > 0.5f && Input.GetAxis("LeftJoystickY") <= 1 ||
+				Input.GetAxis("LeftJoystickY") < -0.5f && Input.GetAxis("LeftJoystickY") >= -1)
+		{
+			adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
+			Vector3 changeDist = new Vector3(adjustDistance, 0, 0);
+			changeDist = transform.localRotation * changeDist;
+			controllerControl.Move(changeDist);
 		}
 	}
 }
