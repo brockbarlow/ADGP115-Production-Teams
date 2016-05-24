@@ -19,8 +19,14 @@ public class Base : MonoBehaviour {
 
     void Update()
     {
+        if (Armor <= 0)
+        {
+            Armor = 0;
+        }
+
         if (HP <= 0)
         {
+            HP = 0;
             GC.GameOver();
         }
     }
