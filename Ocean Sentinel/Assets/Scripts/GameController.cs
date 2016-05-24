@@ -61,6 +61,8 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject SkipButton;
     [SerializeField]
+    private GameObject ControllerSelect;
+    [SerializeField]
     private GameObject TheBase;
 
     void Start ()
@@ -79,6 +81,7 @@ public class GameController : MonoBehaviour {
         UIButton3.SetActive(false);
         UIButton4.SetActive(false);
         SkipButton.SetActive(false);
+        ControllerSelect.SetActive(false);
 
         StartCoroutine(SpawnWaves());
 	}
@@ -100,6 +103,7 @@ public class GameController : MonoBehaviour {
             UIButton3.SetActive(true);
             UIButton4.SetActive(true);
             SkipButton.SetActive(true);
+            ControllerSelect.SetActive(true);
             GameObject.Find("upgrades").GetComponent<Upgrades>().Active = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newVelocity;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newRate;
@@ -126,6 +130,7 @@ public class GameController : MonoBehaviour {
                 UIButton3.SetActive(false);
                 UIButton4.SetActive(false);
                 SkipButton.SetActive(false);
+                ControllerSelect.SetActive(false);
             // Increase the wave count.
             numbWaves++;
 
