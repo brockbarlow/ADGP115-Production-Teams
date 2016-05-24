@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0F;
-	public GameController GC;
+	//public GameController GC;
 	
 
 	void FireProjectile()
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start()
 	{
-		GC = FindObjectOfType<GameController>();
+		//GC = FindObjectOfType<GameController>();
 		newVelocity = 1.0f;
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
@@ -61,8 +61,9 @@ public class PlayerMovement : MonoBehaviour
 		{
 			TempControl.Move(TempMotion);
 		}
-		if (Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x) > 4 ||
-			Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z) > 4)
+
+		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 4 ||
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 4)
 		{
 			if (Input.GetAxis("Vertical") > 0)
 			{
@@ -79,7 +80,5 @@ public class PlayerMovement : MonoBehaviour
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
 		}
-		//Debug.Log("X 'Distance' " + Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x));
-		//Debug.Log("Z 'Distance' " + Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z));
 	}
 }
