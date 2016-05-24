@@ -57,6 +57,7 @@ public class Upgrades : MonoBehaviour {
             }
             GC.GetComponent<GameController>().Gold -= a;
             a *= 2;
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -71,6 +72,7 @@ public class Upgrades : MonoBehaviour {
             }
             GC.GetComponent<GameController>().Gold -= b;
             b *= 2;
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -81,6 +83,7 @@ public class Upgrades : MonoBehaviour {
             PM.GetComponent<PlayerMovement>().MoveVelocity += .5f;
             GC.GetComponent<GameController>().Gold -= c;
             c *= 2;
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -91,11 +94,13 @@ public class Upgrades : MonoBehaviour {
             PM.GetComponent<PlayerMovement>().projectileRate -= .2f;
             GC.GetComponent<GameController>().Gold -= d;
             d *= 2;
+            GetComponent<AudioSource>().Play();
         }
     }
 
     public void None()
     {
+        GetComponent<AudioSource>().Play();
         GC.GetComponent<GameController>().spawnWave = true;
         GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         GC.GetComponent<GameController>().Doit = true;
