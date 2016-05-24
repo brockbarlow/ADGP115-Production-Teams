@@ -46,36 +46,33 @@ public class PlayerMovement : MonoBehaviour
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		//transform.localRotation = Quaternion.Euler(0, Movement, 0);
 		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
+
 		float addDistance = Input.GetAxis("Vertical") * MoveVelocity;
 
-		//gameObject.transform.localRotation = Quaternion.Euler(addDistance, 0, 0);
-		//transform.Rotate(addDistance, Movement, 0);
+		Vector3 TempMotion = new Vector3(addDistance, 0, 0);
+		TempMotion = transform.localRotation * TempMotion;
+		CharacterController TempControl = GetComponent<CharacterController>();
 
-
-		if (Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x) >= 0 &&
-			Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x) <= 4 &&
-			Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z) >= 0 &&
-			Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z) <= 4)
+		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 0 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) < 4 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 0 &&
+			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) < 4)
 		{
-			Vector3 TempMotion = new Vector3(addDistance, 0, 0);
-			TempMotion = transform.localRotation * TempMotion;
-			CharacterController TempControl = GetComponent<CharacterController>();
 			TempControl.Move(TempMotion);
 		}
-		//if (Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x) > 4 ||
-		//	Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z) > 4)
-		//{
-		//	if (Input.GetAxis("Vertical") > 0)
-		//	{
-		//		addDistance = 0;
-		//	}
-		//	else
-		//	{
-		//		addDistance = 1;
-		//	}
-		//}
+		if (Mathf.Abs(transform.position.x - GameObject.Find("Base").transform.position.x) > 4 ||
+			Mathf.Abs(transform.position.z - GameObject.Find("Base").transform.position.z) > 4)
+		{
+			if (Input.GetAxis("Vertical") > 0)
+			{
+				addDistance = 0;
+			}
+			else
+			{
+				TempControl.Move(TempMotion);
+			}
+		}
 
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
