@@ -3,6 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 //Script created by Andrew Miller 
 public class PauseScript : MonoBehaviour {
+    //Audio for when the game has been PAUSED
+    AudioSource audio;
+
+
     //Bool variable that keeps track weather the game has benn paused or not 
     public bool paused;
     //Container for the "Pause" text 
@@ -11,9 +15,10 @@ public class PauseScript : MonoBehaviour {
     public Canvas canvas; 
 	// Use this for initialization
 	void Start () {
-
         //At Start paused will be disabled 
         paused = false;
+        //
+        audio = GetComponent<AudioSource>();
         //Set the refrence to canvas at the start of the game 
         canvas = canvas.GetComponent<Canvas>();
 	}
@@ -31,7 +36,6 @@ public class PauseScript : MonoBehaviour {
             //Set the text on the UI
             pauseText.text = "PAUSED";
         }
-        
     }
     void Paused() {
         //Check if the paused button has been pressed 
@@ -40,6 +44,8 @@ public class PauseScript : MonoBehaviour {
             canvas.enabled = true;
             //Pauses the in game time 
             Time.timeScale = 0;
+            //Set Game Main Audio Sond to 0.05f
+            audio.volume = 0.05f;
         }
         //Check if the paused button 
         if (!paused) {
@@ -49,6 +55,8 @@ public class PauseScript : MonoBehaviour {
             Time.timeScale = 1;
             //Disables the Convase that pauses the game
             canvas.enabled = false;
+            //Sets Curret Game Audio to 0.4f
+            audio.volume = 0.4f;
         }
     }
 }
