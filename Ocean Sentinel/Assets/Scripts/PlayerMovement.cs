@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0F;
-
+	GameObject Defend;
+	
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		//Applies a force to the game object that changes the magnitude and direction
 		playerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
+		playerProjectile.GetComponent<AudioSource>().Play();
 	}
 
 	void Start()
@@ -34,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
-		
+		Defend = GameObject.Find("Base");
 	}
 
 	// Update is called once per frame
@@ -43,32 +45,27 @@ public class PlayerMovement : MonoBehaviour
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		transform.RotateAround(GameObject.Find("Base").transform.position, Vector3.up, Movement * 4);
+		transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
 
-		float addDistance = Input.GetAxis("Vertical") * MoveVelocity;
+		float adjustDistance = Input.GetAxis("Vertical") * MoveVelocity;
 
-		Vector3 TempMotion = new Vector3(addDistance, 0, 0);
-		TempMotion = transform.localRotation * TempMotion;
-		CharacterController TempControl = GetComponent<CharacterController>();
+		Vector3 radialMotion = transform.localRotation * new Vector3(adjustDistance, 0, 0);
+		CharacterController distanceControl = GetComponent<CharacterController>();
 
-		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 0 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) < 4 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 0 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) < 4)
+		if (Vector3.Distance(Defend.transform.position, transform.position) < 4)
 		{
-			TempControl.Move(TempMotion);
+			distanceControl.Move(radialMotion);
 		}
 
-		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 4 ||
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 4)
+		if (Vector3.Distance(Defend.transform.position, transform.position) > 4)
 		{
 			if (Input.GetAxis("Vertical") > 0)
 			{
-				addDistance = 0;
+				adjustDistance = 0;
 			}
 			else
 			{
-				TempControl.Move(TempMotion);
+				distanceControl.Move(radialMotion);
 			}
 		}
 
@@ -76,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
+			
 		}
 	}
 }
