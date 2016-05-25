@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if(projectileVelocity < 0.2f)
+		{
+			projectileVelocity = 0.1f;
+		}
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
@@ -52,28 +56,17 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 radialMotion = transform.localRotation * new Vector3(adjustDistance, 0, 0);
 		CharacterController distanceControl = GetComponent<CharacterController>();
 
-		if (Vector3.Distance(Defend.transform.position, transform.position) < 4)
+		if (Vector3.Distance(Defend.transform.position, transform.position) < 4 ||
+			Vector3.Distance(Defend.transform.position, transform.position) > 4 &&
+			Input.GetAxis("Vertical") < 0)
 		{
 			distanceControl.Move(radialMotion);
-		}
-
-		if (Vector3.Distance(Defend.transform.position, transform.position) > 4)
-		{
-			if (Input.GetAxis("Vertical") > 0)
-			{
-				adjustDistance = 0;
-			}
-			else
-			{
-				distanceControl.Move(radialMotion);
-			}
 		}
 
 		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
 		{
 			nextProjectile = Time.time + projectileRate;
 			FireProjectile();
-			
 		}
 	}
 }
