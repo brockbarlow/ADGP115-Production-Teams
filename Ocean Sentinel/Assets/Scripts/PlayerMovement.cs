@@ -42,9 +42,9 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(projectileVelocity < 0.2f)
+		if(projectileRate < 0.1)
 		{
-			projectileVelocity = 0.1f;
+			projectileRate = 0.1f;
 		}
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
