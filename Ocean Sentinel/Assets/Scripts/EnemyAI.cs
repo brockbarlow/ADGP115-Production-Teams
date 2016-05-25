@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     //Instance so i can reffer wether or not it has found the wall.
     public GameObject Prefab;
     //Refrence to the audio sorce 
-    AudioSource sfx; 
+    AudioSource audio; 
 
 	public float attackSpeed;
     //Time between projectile  
@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour
 
         navMash = GetComponent<NavMeshAgent>();
 
-        sfx = GetComponent<AudioSource>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour
 		if (navMash.enabled == false && Time.time > timeCap)
 		{
 			timeCap = Time.time + time;
-            sfx.Play(); 
+            audio.Play(); 
 			EnemyShot();
 		}
 	}
@@ -67,15 +67,11 @@ public class EnemyAI : MonoBehaviour
     // Check for collider that the object comes in contact with 
     void OnTriggerEnter(Collider collision)
     {
-		if (collision.gameObject.tag == "Wall" && Time.time > timeCap /*|| collision.gameObject.tag == "Enemy"*/)
-		{
-			navMash.enabled = false;
-			gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-			timeCap = Time.time + time;
-			sfx.Play();
-			EnemyShot();
-		}
-	}
+        if (collision.gameObject.tag == "Wall")
+        {
+            navMash.enabled = false;
+        }
+    }
 
     //Instantiate the projectile if it meet 
     //If the time meets the time cap it creats another projectile 
