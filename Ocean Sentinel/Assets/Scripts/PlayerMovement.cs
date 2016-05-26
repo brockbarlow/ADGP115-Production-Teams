@@ -8,13 +8,16 @@ public class PlayerMovement : MonoBehaviour
 	public float projectileVelocity;
 	public float projectileRate;
 	public float newRate;
-	private float nextProjectile = 0.0F;
-	GameObject Defend;
+	private float nextProjectile;
+	Base Defend;
+	
 	
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
 		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
+		AudioSource sfx = FindObjectOfType<AudioSource>();
+		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		//Places the new game object relative to the player object
 		playerProjectile.transform.position = transform.position + transform.right;
@@ -24,10 +27,12 @@ public class PlayerMovement : MonoBehaviour
 		
 		//Rotates the spawned object an additional ninety degrees on the Y-Axis
 		playerProjectile.transform.Rotate(transform.rotation.z, transform.rotation.x, 90);
-		
+
 		//Applies a force to the game object that changes the magnitude and direction
-		playerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
-		playerProjectile.GetComponent<AudioSource>().Play();
+		rbShot.AddForce(transform.right * projectileVelocity, ForceMode.Force);
+
+		//Plays an audio clip whenever a projectile is instantiated
+		sfx.Play();
 	}
 
 	void Start()
@@ -36,15 +41,15 @@ public class PlayerMovement : MonoBehaviour
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
-		Defend = GameObject.Find("Base");
+		Defend = FindObjectOfType<Base>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(projectileRate < 0.1)
+		if (projectileRate < 0.2)
 		{
-			projectileRate = 0.1f;
+			projectileRate = 0.0625f;
 		}
 		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
@@ -63,10 +68,12 @@ public class PlayerMovement : MonoBehaviour
 			distanceControl.Move(radialMotion);
 		}
 
-		if (Input.GetButton("Fire1") && Time.time >= nextProjectile)
+		if (Input.GetButton("Fire1") && Time.time > nextProjectile)
 		{
-			nextProjectile = Time.time + projectileRate;
+			nextProjectile =  Time.time + projectileRate;
 			FireProjectile();
 		}
+		//Debug.Log("Time: " + Time.time);
+		//Debug.Log("NP: " + nextProjectile);
 	}
 }

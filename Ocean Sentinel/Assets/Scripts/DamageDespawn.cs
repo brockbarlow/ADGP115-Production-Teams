@@ -19,11 +19,11 @@ public class DamageDespawn : MonoBehaviour
 
 	void OnTriggerEnter(Collider col)
 	{
-
+		Objective = FindObjectOfType<Base>();
 		if (col.gameObject.tag == "Base")
 		{
 			Destroy(gameObject);
-			Objective = col.gameObject.GetComponent<Base>();
+			//Objective = col.gameObject.GetComponent<Base>();
 			if (Objective.Armor > 0)
 			{
 				Objective.Armor -= damage;
