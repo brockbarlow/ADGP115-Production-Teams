@@ -4,7 +4,8 @@ using System.Collections;
 public class ProjectileDespawn : MonoBehaviour
 {
 	float projectileTime;
-	float enemyDrop = 10.0f;
+	float enemyDrop = 20.0f;
+	GameController GC;
 	
 	// Update is called once per frame
 	void Update ()
@@ -19,16 +20,18 @@ public class ProjectileDespawn : MonoBehaviour
 	//
 	void OnTriggerEnter(Collider col)
 	{
-		
+		GC = FindObjectOfType<GameController>();
 		if(col.gameObject.tag == "Enemy")
 		{
 			Destroy(gameObject);
 			Destroy(col.gameObject);
-			GameObject.Find("GameController").GetComponent<GameController>().Gold += enemyDrop;
+			GC.Gold += enemyDrop;
 		}
 		if (col.gameObject.tag == "Projectile")
 		{
+			//Destroys this instance of the object
 			Destroy(gameObject);
+			//Destroys the object with the Projectile tag
 			Destroy(col.gameObject);
 		}
 		if (col.gameObject.tag == "Player")

@@ -9,17 +9,19 @@ public class PlayerControllerSupport : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0f;
-	GameObject Defend;
+	Base Defend;
 
 	void ControllerFire()
 	{
 		GameObject controllerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
+		AudioSource sfx = FindObjectOfType<AudioSource>();
+		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		controllerProjectile.transform.position = transform.position + transform.right;
 		controllerProjectile.transform.localRotation = transform.rotation;
 		controllerProjectile.transform.Rotate(transform.rotation.z, transform.rotation.x, 90);
-		controllerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
-		controllerProjectile.GetComponent<AudioSource>().Play();
+		rbShot.AddForce(transform.right * projectileVelocity, ForceMode.Force);
+		sfx.Play();
 	}
 
 	// Use this for initialization
@@ -29,17 +31,22 @@ public class PlayerControllerSupport : MonoBehaviour
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
-		Defend = GameObject.Find("Base");
+		Defend = FindObjectOfType<Base>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if(projectileRate < 0.2)
+		{
+			projectileRate = 0.0625f;
+		}
+
 		float Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 		float adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
-		CharacterController controllerControl = GetComponent<CharacterController>();
-
-		Vector3 changeDist = new Vector3(adjustDistance, 0, 0);
+		
+		CharacterController distanceControl = GetComponent<CharacterController>();
+		Vector3 radialMotion = new Vector3(adjustDistance, 0, 0);
 
 		if (Input.GetButton("A") && Time.time >= nextProjectile)
 		{
@@ -66,28 +73,15 @@ public class PlayerControllerSupport : MonoBehaviour
 			if (Input.GetAxis("LeftJoystickY") <= 0.5f && Input.GetAxis("LeftJoystickY") > 0 ||
 			Input.GetAxis("LeftJoystickY") >= -0.5f && Input.GetAxis("LeftJoystickY") < 0)
 			{
-				changeDist = transform.localRotation * (changeDist * 0.5f);
-				controllerControl.Move(changeDist);
+				radialMotion = transform.localRotation * (radialMotion * 0.5f);
+				distanceControl.Move(radialMotion);
 			}
 
 			else if (Input.GetAxis("LeftJoystickY") > 0.5f && Input.GetAxis("LeftJoystickY") <= 1 ||
 					Input.GetAxis("LeftJoystickY") < -0.5f && Input.GetAxis("LeftJoystickY") >= -1)
 			{
-				changeDist = transform.localRotation * changeDist;
-				controllerControl.Move(changeDist);
-			}
-		}
-
-		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 4 ||
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 4)
-		{
-			if (Input.GetAxis("Vertical") > 0)
-			{
-				adjustDistance = 0;
-			}
-			else
-			{
-				controllerControl.Move(changeDist);
+				radialMotion = transform.localRotation * radialMotion;
+				distanceControl.Move(radialMotion);
 			}
 		}
 	}
