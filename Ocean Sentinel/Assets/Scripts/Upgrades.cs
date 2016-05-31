@@ -1,22 +1,13 @@
-﻿////////////////////////////////////////////////////////////////
-//Austin Morrell//
-//May 31 2016//
-//ADGP-115 Production Teams//
-///////////////////////////////////////////////////////////////
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class Upgrades : MonoBehaviour {
 
-    // The game controller.
     [SerializeField]
     private GameObject GC;
-    // The base.
     [SerializeField]
     private GameObject TheBase;
-    // The Player.
     [SerializeField]
     private GameObject PM;
     [SerializeField]
@@ -25,8 +16,7 @@ public class Upgrades : MonoBehaviour {
     private float a, b, c, d;
     public bool Doit;
     public bool Active;
-
-    // This is used for initialization.
+	
     void Start()
     {
         cost1 = 30;
@@ -44,7 +34,6 @@ public class Upgrades : MonoBehaviour {
 
     void Update()
     {
-        // Resets the cost to the original cost.
         if (Active && Doit)
         {
             a = cost1;
@@ -57,7 +46,6 @@ public class Upgrades : MonoBehaviour {
         costText.GetComponent<Text>().text =  "Cost: " + a + "     Cost: " + b + "     Cost: " + c + "     Cost: " + d;
     }
 
-    // Gives HP back to the base.
 	public void Repair()
     {
         if ((GC.GetComponent<GameController>().Gold >= a) && (TheBase.GetComponent<Base>().HP < TheBase.GetComponent<Base>().max_HP))
@@ -73,7 +61,6 @@ public class Upgrades : MonoBehaviour {
         }
     }
 
-    // Gives Armor back to the base.
     public void Armor()
     {
         if ((GC.GetComponent<GameController>().Gold >= b) && (TheBase.GetComponent<Base>().Armor < TheBase.GetComponent<Base>().max_Armor))
@@ -89,7 +76,6 @@ public class Upgrades : MonoBehaviour {
         }
     }
 
-    // Increase the player's movement speed.
     public void Speed()
     {
         if (GC.GetComponent<GameController>().Gold >= c)
@@ -101,7 +87,6 @@ public class Upgrades : MonoBehaviour {
         }
     }
 
-    // Increases the player's rate of fire.
     public void Rate()
     {
         if (GC.GetComponent<GameController>().Gold >= d)
@@ -113,7 +98,6 @@ public class Upgrades : MonoBehaviour {
         }
     }
 
-    // Proceeds to the next wave.
     public void None()
     {
         GetComponent<AudioSource>().Play();
