@@ -7,7 +7,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Base : MonoBehaviour {
+public class Base : MonoBehaviour
+{
 
     // The max amount of HP the base can have.
     public float max_HP;
@@ -19,15 +20,22 @@ public class Base : MonoBehaviour {
     public float Armor;
     // The GameController.
     public GameController GC;
+    //referes to a game audio sorce with a clip in the gameopbject
+    AudioSource hitAudio;
+
 
     // This is used for initialization.
-    void Start () {
+
+    void Start()
+    {
+
         GC = FindObjectOfType<GameController>();
+        hitAudio = gameObject.GetComponent<AudioSource>();
         max_HP = 300;
         max_Armor = 200;
         HP = max_HP;
         Armor = max_Armor;
-	}
+    }
 
     // Is called every frame.
     void Update()
@@ -44,5 +52,14 @@ public class Base : MonoBehaviour {
             HP = 0;
             GC.GameOver();
         }
+
+
+
+    }
+    //Looks for in comming collider with sposific tag then does STUFF
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+            hitAudio.Play();
     }
 }
