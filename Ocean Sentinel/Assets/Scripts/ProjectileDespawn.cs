@@ -38,8 +38,9 @@ public class ProjectileDespawn : MonoBehaviour
 		//Checks if this game object collided with another that has the Enemy tag
 		if(col.gameObject.tag == "Enemy")
 		{
-			//Destroys this game object
-			Destroy(gameObject);
+            GC.PlaySound();
+            //Destroys this game object
+            Destroy(gameObject);
 			//Destroys the game object that this one collided with
 			Destroy(col.gameObject);
 			//Accesses a value named Gold in the GameController script and adds the value of enemyDrop to it
