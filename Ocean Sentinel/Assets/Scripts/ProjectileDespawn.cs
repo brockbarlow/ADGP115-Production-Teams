@@ -23,6 +23,7 @@ public class ProjectileDespawn : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 		if(col.gameObject.tag == "Enemy")
 		{
+            GC.PlaySound();
 			Destroy(gameObject);
 			Destroy(col.gameObject);
 			GC.Gold += enemyDrop;
