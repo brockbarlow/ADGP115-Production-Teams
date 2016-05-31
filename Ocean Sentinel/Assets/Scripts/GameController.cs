@@ -191,4 +191,9 @@ public class GameController : MonoBehaviour {
             Destroy(b);
         }   
     }
+
+    public void PlaySound()
+    {
+        GetComponent<AudioSource>().Play();
+    }
 }
