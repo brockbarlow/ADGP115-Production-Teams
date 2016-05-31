@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿////////////////////////////////////////////////////////////////
+//Austin Morrell//
+//May 31 2016//
+//ADGP-115 Production Teams//
+///////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -65,6 +71,7 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject TheBase;
 
+    // This is used for initialization.
     void Start ()
     {
         spawnWait = 1;
