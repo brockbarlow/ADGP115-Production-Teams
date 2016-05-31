@@ -3,14 +3,19 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+	//The speed at which the player will move
 	public float MoveVelocity;
+	//A constant value that's used as the base speed for the player to move
 	public float newVelocity;
+	//The speed of projectiles that the player instantiates
 	public float projectileVelocity;
+	//A value that determines the amount of time inbetween each projectile
 	public float projectileRate;
+	//A constant value that's used as the base time inbetween each projectile
 	public float newRate;
+	//
 	private float nextProjectile;
 	Base Defend;
-	
 	
 	void FireProjectile()
 	{
@@ -47,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		//Limits the projectile rate to avoid projectiles
 		if (projectileRate < 0.2)
 		{
 			projectileRate = 0.0625f;
@@ -56,11 +62,17 @@ public class PlayerMovement : MonoBehaviour
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
 		transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
 
+		//Sets up movent to allow for a limited distance the player can move away from the base
+		//Allows for movement of the Player gameObject using 'W' & 'S' or the 'up' & 'down' arrow keys
 		float adjustDistance = Input.GetAxis("Vertical") * MoveVelocity;
 
+		//Connects how the player will move with vertical input to their rotation
 		Vector3 radialMotion = transform.localRotation * new Vector3(adjustDistance, 0, 0);
 		CharacterController distanceControl = GetComponent<CharacterController>();
 
+		//Checks the distance between the player and the base
+		//If the distance is less than four then the player can freely move with vertical input
+		//But if the distance is greater than four then the player can only move towards the base
 		if (Vector3.Distance(Defend.transform.position, transform.position) < 4 ||
 			Vector3.Distance(Defend.transform.position, transform.position) > 4 &&
 			Input.GetAxis("Vertical") < 0)
@@ -68,12 +80,11 @@ public class PlayerMovement : MonoBehaviour
 			distanceControl.Move(radialMotion);
 		}
 
+		//
 		if (Input.GetButton("Fire1") && Time.time > nextProjectile)
 		{
 			nextProjectile =  Time.time + projectileRate;
 			FireProjectile();
 		}
-		//Debug.Log("Time: " + Time.time);
-		//Debug.Log("NP: " + nextProjectile);
 	}
 }
