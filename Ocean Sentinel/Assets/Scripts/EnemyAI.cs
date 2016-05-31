@@ -74,16 +74,22 @@ public class EnemyAI : MonoBehaviour
 		}
     }
 
-    //Instantiate the projectile if it meet 
-    //If the time meets the time cap it creats another projectile 
+    //Instantiate the projectile if it meet
+    //If the time meets the time cap it creats another projectile
+	//
     void EnemyShot()
     {
-		//Creats a new object/sets the location pined by the user
+		//Creats a new object instance from a prefab
 		GameObject enemyProjectile = Instantiate(Prefab);
-		Vector3 Targeting = (GameObject.Find("Base").transform.position - transform.position).normalized;
+		//Creates a Vector3 for the direction of a force vector
+		Vector3 Targeting = (@base.position - transform.position).normalized;
+		//
 		enemyProjectile.transform.position = transform.position + transform.forward;
+		//
 		enemyProjectile.transform.localRotation = transform.rotation;
+		//
 		enemyProjectile.transform.Rotate(90, transform.rotation.x, transform.rotation.y);
+		//
 		enemyProjectile.GetComponent<Rigidbody>().AddForce(Targeting * attackSpeed, ForceMode.Force);
 	}
 }
