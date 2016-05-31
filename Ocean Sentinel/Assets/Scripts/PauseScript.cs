@@ -30,7 +30,7 @@ public class PauseScript : MonoBehaviour {
 	}
     void PausedClicked() {
         //Sets the Conditions for when the space bar has been preesed down
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("B")) {
             //Set the bool oppisite to what the curret stat
             paused = !paused;
             //Set the text on the UI

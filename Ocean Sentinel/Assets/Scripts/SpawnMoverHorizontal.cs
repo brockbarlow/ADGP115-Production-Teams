@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
+//using System.Collections;
 
+//script created by Brock Barlow
 //this script will give the enemy spawn points the ability to move
 
 public class SpawnMoverHorizontal : MonoBehaviour
 {
-
-    //public float speed; //how fast the spawn points will move
-    private bool back, forth = false; //if the spawn points can move or not
+    private bool back, forth = false; //if the spawn points can move or not. starts off false.
 
     // Use this for initialization
     void Start()
@@ -15,7 +14,7 @@ public class SpawnMoverHorizontal : MonoBehaviour
 
     }
 
-    void Lerp(float a, float b, float c)
+    void Lerp(float a, float b, float c) //custom lerp function. gameObject's transfrom position becomes a new vector3 variable.
     {
         gameObject.transform.position = new Vector3(transform.position.x + a, transform.position.y + b, transform.position.z + c);
     }
@@ -23,24 +22,24 @@ public class SpawnMoverHorizontal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (forth == true)
-        {
-            Lerp(0.4f, 0, 0 * Time.deltaTime /** speed*/);
-        }
+        if (forth == true) //if the forth variable is equal to true, the game objects's x position will become positive over
+        {                  //time
+            Lerp(0.4f, 0, 0 * Time.deltaTime);
+        }       // x,  y,  z times time
 
-        if (back == true)
+        if (back == true) //if the back variable is equal to true, the game object's x position will become negative over time.
         {
-            Lerp(-0.4f, 0, 0 * Time.deltaTime /** speed*/);
-        }
+            Lerp(-0.4f, 0, 0 * Time.deltaTime);
+        }       // x,  y,  z  times time
 
-        if (gameObject.transform.position.x <= -29)
-        {
+        if (gameObject.transform.localPosition.x <= -29) //if the game object's x position is less than or equal to -29, set the 
+        {                                           //forth variable to true and set the back variable to false.
             forth = true;
             back = false;
         }
 
-        if (gameObject.transform.position.x >= 29)
-        {
+        if (gameObject.transform.localPosition.x >= 29) //if the game objects's x position is greater than or equal to 29, set the 
+        {                                          //forth variable to false and set the back variable to true.
             forth = false;
             back = true;
         }
