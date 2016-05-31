@@ -23,14 +23,12 @@ public class Base : MonoBehaviour
     //referes to a game audio sorce with a clip in the gameopbject
     AudioSource hitAudio;
 
-<<<<<<< HEAD
+
     // This is used for initialization.
-    void Start () {
-=======
 
     void Start()
     {
->>>>>>> parent of cb778d1... Revert "Will Mon 9th Commit 05/31/2016 4:00pm"
+
         GC = FindObjectOfType<GameController>();
         hitAudio = gameObject.GetComponent<AudioSource>();
         max_HP = 300;
@@ -59,7 +57,8 @@ public class Base : MonoBehaviour
 
     }
     //Looks for in comming collider with sposific tag then does STUFF
-    void OnTriggerEnter(Collider collision) {
+    void OnTriggerEnter(Collider collision)
+    {
         if (collision.gameObject.tag == "Projectile")
             hitAudio.Play();
     }
