@@ -32,13 +32,13 @@ public class SpawnMoverHorizontal : MonoBehaviour
             Lerp(-0.4f, 0, 0 * Time.deltaTime);
         }       // x,  y,  z  times time
 
-        if (gameObject.transform.position.x <= -29) //if the game object's x position is less than or equal to -29, set the 
+        if (gameObject.transform.localPosition.x <= -29) //if the game object's x position is less than or equal to -29, set the 
         {                                           //forth variable to true and set the back variable to false.
             forth = true;
             back = false;
         }
 
-        if (gameObject.transform.position.x >= 29) //if the game objects's x position is greater than or equal to 29, set the 
+        if (gameObject.transform.localPosition.x >= 29) //if the game objects's x position is greater than or equal to 29, set the 
         {                                          //forth variable to false and set the back variable to true.
             forth = false;
             back = true;
