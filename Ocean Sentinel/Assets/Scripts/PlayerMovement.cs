@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
 		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
-		AudioSource sfx = FindObjectOfType<AudioSource>();
+		AudioSource sfx = playerProjectile.GetComponent<AudioSource>();
+		sfx.clip = Resources.Load("Shot3", typeof(AudioClip)) as AudioClip;
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		//Places the new game object relative to the player object
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Plays an audio clip whenever a projectile is instantiated
 		sfx.Play();
+		Debug.Log(sfx.clip);
 	}
 
 	void Start()
