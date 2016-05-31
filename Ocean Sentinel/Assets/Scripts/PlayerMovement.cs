@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿///////////////
+//Created by Eugene Hochenedel
+//
+//////////////
+using UnityEngine;
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
