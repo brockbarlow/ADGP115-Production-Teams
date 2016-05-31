@@ -110,11 +110,10 @@ public class GameController : MonoBehaviour {
             DestroyAll(GameObject.FindGameObjectsWithTag("Projectile"));
             Doit = false;
             Ready = false;
-        }
-
-        if (numbWaves > 6)
-        {
-            YouWin();
+            if (numbWaves == 6)
+            {
+                YouWin();
+            }
         }
     }
 
