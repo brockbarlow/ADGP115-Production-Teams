@@ -9,15 +9,19 @@ public class PlayerControllerSupport : MonoBehaviour
 	public float projectileRate;
 	public float newRate;
 	private float nextProjectile = 0.0f;
+	Base Defend;
 
 	void ControllerFire()
 	{
 		GameObject controllerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
+		AudioSource sfx = FindObjectOfType<AudioSource>();
+		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		controllerProjectile.transform.position = transform.position + transform.right;
 		controllerProjectile.transform.localRotation = transform.rotation;
 		controllerProjectile.transform.Rotate(transform.rotation.z, transform.rotation.x, 90);
-		controllerProjectile.GetComponent<Rigidbody>().AddForce(transform.right * projectileVelocity, ForceMode.Force);
+		rbShot.AddForce(transform.right * projectileVelocity, ForceMode.Force);
+		sfx.Play();
 	}
 
 	// Use this for initialization
@@ -27,17 +31,22 @@ public class PlayerControllerSupport : MonoBehaviour
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
+		Defend = FindObjectOfType<Base>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		GameObject Center = GameObject.Find("Base");
+		if(projectileRate < 0.2)
+		{
+			projectileRate = 0.0625f;
+		}
+
 		float Movement = Input.GetAxis("LeftJoystickX") * MoveVelocity;
 		float adjustDistance = Input.GetAxis("LeftJoystickY") * MoveVelocity;
-		CharacterController controllerControl = GetComponent<CharacterController>();
-
-		Vector3 changeDist = new Vector3(adjustDistance, 0, 0);
+		
+		CharacterController distanceControl = GetComponent<CharacterController>();
+		Vector3 radialMotion = new Vector3(adjustDistance, 0, 0);
 
 		if (Input.GetButton("A") && Time.time >= nextProjectile)
 		{
@@ -48,45 +57,31 @@ public class PlayerControllerSupport : MonoBehaviour
 		if (Input.GetAxis("LeftJoystickX") <= 0.5f && Input.GetAxis("LeftJoystickX") > 0 ||
 			Input.GetAxis("LeftJoystickX") >= -0.5f && Input.GetAxis("LeftJoystickX") < 0)
 		{
-			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 2);
+			transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 2);
 		}
 
 		else if(Input.GetAxis("LeftJoystickX") > 0.5f && Input.GetAxis("LeftJoystickX") <= 1 || 
 				Input.GetAxis("LeftJoystickX") < -0.5f && Input.GetAxis("LeftJoystickX") >= -1)
 		{
-			transform.RotateAround(Center.transform.position, Vector3.up, Movement * 4);
+			transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
 		}
 
-		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 0 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) < 4 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 0 &&
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) < 4)
+		if (Vector3.Distance(Defend.transform.position, transform.position) < 4 ||
+			Vector3.Distance(Defend.transform.position, transform.position) > 4 &&
+			Input.GetAxis("LeftJoystickY") < 0)
 		{
 			if (Input.GetAxis("LeftJoystickY") <= 0.5f && Input.GetAxis("LeftJoystickY") > 0 ||
 			Input.GetAxis("LeftJoystickY") >= -0.5f && Input.GetAxis("LeftJoystickY") < 0)
 			{
-				changeDist = transform.localRotation * (changeDist * 0.5f);
-				controllerControl.Move(changeDist);
+				radialMotion = transform.localRotation * (radialMotion * 0.5f);
+				distanceControl.Move(radialMotion);
 			}
 
 			else if (Input.GetAxis("LeftJoystickY") > 0.5f && Input.GetAxis("LeftJoystickY") <= 1 ||
 					Input.GetAxis("LeftJoystickY") < -0.5f && Input.GetAxis("LeftJoystickY") >= -1)
 			{
-				changeDist = transform.localRotation * changeDist;
-				controllerControl.Move(changeDist);
-			}
-		}
-
-		if (Mathf.Abs(GameObject.Find("Base").transform.position.x - transform.position.x) > 4 ||
-			Mathf.Abs(GameObject.Find("Base").transform.position.z - transform.position.z) > 4)
-		{
-			if (Input.GetAxis("Vertical") > 0)
-			{
-				adjustDistance = 0;
-			}
-			else
-			{
-				controllerControl.Move(changeDist);
+				radialMotion = transform.localRotation * radialMotion;
+				distanceControl.Move(radialMotion);
 			}
 		}
 	}
