@@ -19,14 +19,24 @@ public class PlayerMovement : MonoBehaviour
 	public float newRate;
 	//
 	private float nextProjectile;
+	//Accesses the Base class
 	Base Defend;
+	//Creates access for a public AudioClip
+	public AudioClip ProjectileShoot;
+	//Accesses the object's AudioSource
+	AudioSource sfx;
 	
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
 		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
-		AudioSource sfx = playerProjectile.GetComponent<AudioSource>();
-		sfx.clip = Resources.Load("Shot3", typeof(AudioClip)) as AudioClip;
+		//AudioSource sfx = GetComponent<AudioSource>();
+		
+		//Sets the audio clip in the object's audio source to ProjectileShoot
+		sfx.clip = ProjectileShoot;
+
+		//sfx.clip = Resources.Load("Shot3", typeof(AudioClip)) as AudioClip;
+		//
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		//Places the new game object relative to the player object
@@ -53,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
 		Defend = FindObjectOfType<Base>();
+		sfx = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -77,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 		CharacterController distanceControl = GetComponent<CharacterController>();
 
 		//Checks the distance between the player and the base
-		//If the distance is less than four then the player can freely move with vertical input
+		//If the distance is less than four then the player can move with vertical input
 		//But if the distance is greater than four then the player can only move towards the base
 		if (Vector3.Distance(Defend.transform.position, transform.position) < 4 ||
 			Vector3.Distance(Defend.transform.position, transform.position) > 4 &&
