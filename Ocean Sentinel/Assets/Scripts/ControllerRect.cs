@@ -58,7 +58,8 @@ public class ControllerRect : MonoBehaviour {
         // Presses the currently selected button.
         if (Input.GetButtonDown("A"))
         {
-            Buttons[Counter].GetComponent<Button>().onClick.Invoke();
+			//Buttons[Counter].GetComponent<Button>().onClick.Invoke();
+			Buttons[Counter].GetComponent<Button>().Select();
         }
 	}
 }
