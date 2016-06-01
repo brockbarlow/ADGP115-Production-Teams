@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 /// <summary>
+/// Creater: William Montero
 /// EnemyAI is a class made for the enemies movement 
 /// It makes a few checks 
 /// if base exists
@@ -16,14 +17,12 @@ public class EnemyAI : MonoBehaviour
     public GameObject Prefab;
     //Refrence to the audio sorce 
     AudioSource sfx;
-    //Death Clip for the enemy 
-    public AudioSource death;
+    //Sets the enemy speed sets to the players location 
 	public float attackSpeed;
     //Time between projectile  
     public float time;
     //Time till next shot 
     private float timeCap = 0.0f;
-    //Checks when the enemy collides with the wall 
     
     //Referres to the games naviagtion mesh 
     //GameObject wall;
@@ -74,10 +73,6 @@ public class EnemyAI : MonoBehaviour
 			navMash.enabled = false;
 			gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		}
-        if(collision.gameObject.tag == "Projectile")
-        {
-            death.Play();
-        }
     }
 
     //Instantiate the projectile if it meet
