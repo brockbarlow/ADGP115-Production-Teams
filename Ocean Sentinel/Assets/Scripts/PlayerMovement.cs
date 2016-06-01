@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Plays an audio clip whenever a projectile is instantiated
 		sfx.Play();
-		Debug.Log(sfx.clip);
+		//Debug.Log(sfx.clip);
 	}
 
 	void Start()
