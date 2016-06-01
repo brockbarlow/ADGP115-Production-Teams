@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-//Script created by Andrew Miller 
+//Script Inspired by Andrew Millers Code
+/// <summary>
+/// Creater: William Montero
+/// Class is ment to have a control on the games pause settings in the game scene
+/// </summary>
 public class PauseScript : MonoBehaviour {
     //Audio for when the game has been PAUSED
     AudioSource audio;
