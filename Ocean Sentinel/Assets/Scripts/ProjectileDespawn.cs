@@ -5,6 +5,10 @@
 using UnityEngine;
 using System.Collections;
 
+//Destroys instantiations of the attached object on trigger detection
+//And destroys marked objects that the trigger detected
+//And increments a value named gold
+
 public class ProjectileDespawn : MonoBehaviour
 {
 	//Empty value that's used for despawning the projectile
@@ -13,6 +17,8 @@ public class ProjectileDespawn : MonoBehaviour
 	float enemyDrop = 20.0f;
 	//Accesses the GameController script
 	GameController GC;
+
+
 	
 	// Update is called once per frame
 	void Update ()
@@ -28,7 +34,7 @@ public class ProjectileDespawn : MonoBehaviour
 			
 		}
 		//Outputs the current value of projectileTime to the Unity Console
-			Debug.Log("Projectile despawned. " + projectileTime);
+		//Debug.Log("Projectile despawned. " + projectileTime);
 	}
 
 	//Called when the Collider col enters this object's trigger
@@ -57,7 +63,7 @@ public class ProjectileDespawn : MonoBehaviour
 			//Destroys the object with the Projectile tag
 			Destroy(col.gameObject);
 			//Outputs to the Unity Console if triggered
-			Debug.Log("Both Destroyed");
+			//Debug.Log("Both Destroyed");
 		}
 	}
 }
