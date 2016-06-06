@@ -65,5 +65,9 @@ public class ProjectileDespawn : MonoBehaviour
 			//Outputs to the Unity Console if triggered
 			//Debug.Log("Both Destroyed");
 		}
+		//if(col.gameObject.tag == "Player")
+		//{
+		//	Debug.Log("Hit the player.");
+		//}
 	}
 }
