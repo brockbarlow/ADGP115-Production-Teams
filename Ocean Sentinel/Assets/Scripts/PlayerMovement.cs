@@ -4,9 +4,12 @@
 //////////////
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    private EventSystem ES;
 	//The speed at which the player will move
 	public float MoveVelocity;
 	//A constant value that's used as the base speed for the player to move
@@ -64,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 		projectileRate = newRate;
 		Defend = FindObjectOfType<Base>();
 		sfx = GetComponent<AudioSource>();
+        ES = FindObjectOfType<EventSystem>();
 	}
 
 	// Update is called once per frame
@@ -98,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		//
-		if (Input.GetButton("Fire1") && Time.time > nextProjectile)
+		if (Input.GetButton("Fire1") && Time.time > nextProjectile && ES.currentSelectedGameObject == null)
 		{
 			nextProjectile =  Time.time + projectileRate;
 			FireProjectile();
