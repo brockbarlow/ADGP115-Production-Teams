@@ -155,7 +155,8 @@ public class GameController : MonoBehaviour {
                 // We are now ready to start checking if the enemies are dead.
                 Ready = true;
                 // Increase the number of enemies next wave.
-                numbEnemies *= 2;
+                numbEnemies *= 1.5f;
+                Mathf.Round(numbEnemies);
                 // Pause the couroutine.
                 spawnWave = false;
             }

@@ -7,9 +7,12 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Upgrades : MonoBehaviour {
 
+    [SerializeField]
+    private EventSystem ES;
     // The game controller.
     [SerializeField]
     private GameObject GC;
@@ -40,6 +43,7 @@ public class Upgrades : MonoBehaviour {
         Doit = true;
         costText.SetActive(false);
         Active = false;
+        ES = FindObjectOfType<EventSystem>();
     }
 
     void Update()
@@ -121,6 +125,7 @@ public class Upgrades : MonoBehaviour {
         GC.GetComponent<GameController>().StartCoroutine(GC.GetComponent<GameController>().SpawnWaves());
         GC.GetComponent<GameController>().Doit = true;
         costText.SetActive(false);
+        ES.SetSelectedGameObject(null);
         Doit = true;
     }
 }
