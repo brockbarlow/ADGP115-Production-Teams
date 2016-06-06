@@ -38,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
 		//Sets the audio clip in the object's audio source to ProjectileShoot
 		sfx.clip = ProjectileShoot;
 
+		sfx.volume = 0.45f;
+		sfx.pitch = 1.5f;
+
 		//sfx.clip = Resources.Load("Shot3", typeof(AudioClip)) as AudioClip;
 		//
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
@@ -70,6 +73,9 @@ public class PlayerMovement : MonoBehaviour
         ES = FindObjectOfType<EventSystem>();
 	}
 
+
+	public float timeBetween;
+	public float availiableBullets;
 	// Update is called once per frame
 	void Update()
 	{
@@ -102,10 +108,18 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		//
-		if (Input.GetButton("Fire1") && Time.time > nextProjectile && ES.currentSelectedGameObject == null)
+		timeBetween = Time.deltaTime * 60;
+		if (Input.GetButton("Fire1") && timeBetween > 1 && ES.currentSelectedGameObject == null /*&& availiableBullets > 0*/)
 		{
-			nextProjectile =  Time.time + projectileRate;
+			//nextProjectile =  Time.deltaTime + projectileRate;
+			//availiableBullets--;
+			timeBetween = 0;
 			FireProjectile();
 		}
+		//if(availiableBullets <= 0)
+		//{
+		//	nextProjectile += 1;
+		//	availiableBullets = nextProjectile;
+		//}
 	}
 }

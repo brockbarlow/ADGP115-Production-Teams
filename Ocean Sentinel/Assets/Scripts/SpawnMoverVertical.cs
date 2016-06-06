@@ -43,14 +43,14 @@ public class SpawnMoverVertical : MonoBehaviour
 		if (gameObject.transform.localPosition.z <= -10)
 		{
 			leave = true;
-			Debug.Log(leave);
+			//Debug.Log(leave);
 		}
 
 		//If the object's Z-Coordinate, relative to its parent, is greater than or equal to 35, set leave to false
 		if (gameObject.transform.localPosition.z >= 35)
 		{
 			leave = false;
-			Debug.Log(leave);
+			//Debug.Log(leave);
 		}
 		
 	}
