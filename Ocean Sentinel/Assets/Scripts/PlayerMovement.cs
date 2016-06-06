@@ -108,14 +108,15 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		//
-		timeBetween = Time.deltaTime * 60;
-		if (Input.GetButton("Fire1") && timeBetween > 1 && ES.currentSelectedGameObject == null /*&& availiableBullets > 0*/)
+		timeBetween += Time.deltaTime * 1;
+		if (Input.GetButton("Fire1") && timeBetween > 2 && ES.currentSelectedGameObject == null /*&& availiableBullets > 0*/)
 		{
 			//nextProjectile =  Time.deltaTime + projectileRate;
 			//availiableBullets--;
 			timeBetween = 0;
 			FireProjectile();
 		}
+		Debug.Log(timeBetween);
 		//if(availiableBullets <= 0)
 		//{
 		//	nextProjectile += 1;
