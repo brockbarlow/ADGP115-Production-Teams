@@ -5,6 +5,9 @@
 using UnityEngine;
 using System.Collections;
 
+//This script is used for despawning the connected object
+//It perfoms trigger checks to destroy it and decrement values associated with the Base class
+
 public class DamageDespawn : MonoBehaviour
 {
 	//Accesses the Base and creates an object from it

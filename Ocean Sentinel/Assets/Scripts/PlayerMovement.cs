@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 	//Accesses the object's AudioSource
 	AudioSource sfx;
 	
+	//
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
@@ -73,9 +74,6 @@ public class PlayerMovement : MonoBehaviour
         ES = FindObjectOfType<EventSystem>();
 	}
 
-
-	public float timeBetween;
-	public float availiableBullets;
 	// Update is called once per frame
 	void Update()
 	{
@@ -108,15 +106,13 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		//
-		timeBetween += Time.deltaTime * 1;
-		if (Input.GetButton("Fire1") && timeBetween > 2 && ES.currentSelectedGameObject == null /*&& availiableBullets > 0*/)
+		nextProjectile += Time.deltaTime;
+		if (Input.GetButton("Fire1") && nextProjectile > projectileRate && ES.currentSelectedGameObject == null /*&& availiableBullets > 0*/)
 		{
-			//nextProjectile =  Time.deltaTime + projectileRate;
-			//availiableBullets--;
-			timeBetween = 0;
+			nextProjectile = 0;
 			FireProjectile();
 		}
-		Debug.Log(timeBetween);
+		//Debug.Log(nextProjectile);
 		//if(availiableBullets <= 0)
 		//{
 		//	nextProjectile += 1;
