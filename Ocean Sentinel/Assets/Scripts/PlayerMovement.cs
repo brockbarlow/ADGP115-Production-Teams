@@ -28,7 +28,13 @@ public class PlayerMovement : MonoBehaviour
 	public AudioClip ProjectileShoot;
 	//Accesses the object's AudioSource
 	AudioSource sfx;
-	
+	//Used for accessing a child of this game object
+	GameObject Ship;
+
+	GameObject Temp;
+
+	Transform Temp2;
+
 	//
 	void FireProjectile()
 	{
@@ -72,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
 		Defend = FindObjectOfType<Base>();
 		sfx = GetComponent<AudioSource>();
         ES = FindObjectOfType<EventSystem>();
+		Ship = GameObject.Find("ShipGRP");
 	}
 
 	// Update is called once per frame
@@ -98,12 +105,25 @@ public class PlayerMovement : MonoBehaviour
 		//Checks the distance between the player and the base
 		//If the distance is less than four then the player can move with vertical input
 		//But if the distance is greater than four then the player can only move towards the base
-		if (Vector3.Distance(Defend.transform.position, transform.position) < 4 ||
-			Vector3.Distance(Defend.transform.position, transform.position) > 4 &&
+		if (Vector3.Distance(Defend.transform.position, transform.position) < 6 ||
+			Vector3.Distance(Defend.transform.position, transform.position) > 6 &&
 			Input.GetAxis("Vertical") < 0)
 		{
 			distanceControl.Move(radialMotion);
 		}
+
+		//Changes the Ship object's localRotation about the Y-axis to 180
+		if (Input.GetAxis("Horizontal") > 0 && Ship.transform.rotation.y < 1)
+		{
+			Ship.transform.localRotation = Quaternion.Euler(0, 180, 0);
+		}
+
+		//Changes the Ship object's localRotation about the Y-axis to 0
+		if(Input.GetAxis("Horizontal") < 0 && Ship.transform.rotation.y > -1)
+		{
+			Ship.transform.localRotation = Quaternion.Euler(0, 0, 0);
+		}
+		//Debug.Log(transform.localRotation);
 
 		//
 		nextProjectile += Time.deltaTime;
