@@ -53,9 +53,10 @@ public class Base : MonoBehaviour
         if (HP <= 0 && Stop == false)
         {
             HP = 0;
-            Instantiate(Resources.Load("Explosion", typeof(GameObject)), transform.position, transform.rotation);
+            GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
+            explosion.transform.position = transform.position;
             Destroy(gameObject.GetComponent<MeshRenderer>());
-            StartCoroutine(Wait(1.5f));
+            StartCoroutine(Wait(2));
             Stop = true;
         }
     }
