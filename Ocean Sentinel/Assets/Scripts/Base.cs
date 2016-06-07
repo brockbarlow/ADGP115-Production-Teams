@@ -22,6 +22,8 @@ public class Base : MonoBehaviour
     public GameController GC;
     //referes to a game audio sorce with a clip in the gameopbject
     AudioSource hitAudio;
+    // Stops the check for losing
+    private bool Stop;
 
 
     // This is used for initialization.
@@ -35,6 +37,7 @@ public class Base : MonoBehaviour
         max_Armor = 200;
         HP = max_HP;
         Armor = max_Armor;
+        Stop = false;
     }
 
     // Is called every frame.
@@ -47,12 +50,13 @@ public class Base : MonoBehaviour
         }
 
         // If the base has no HP left you lose.
-        if (HP <= 0)
+        if (HP <= 0 && Stop == false)
         {
             HP = 0;
             Instantiate(Resources.Load("Explosion", typeof(GameObject)), transform.position, transform.rotation);
             Destroy(gameObject.GetComponent<MeshRenderer>());
-            StartCoroutine(Wait(3));
+            StartCoroutine(Wait(1.5f));
+            Stop = true;
         }
     }
 
