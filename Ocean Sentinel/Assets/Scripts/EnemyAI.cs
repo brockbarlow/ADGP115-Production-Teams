@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     //Time between projectile  
     public float time;
     //Time till next shot 
-    private float timeCap = 0.0f;
+    private float timeCap;
     
     //Referres to the games naviagtion mesh 
     //GameObject wall;
@@ -45,13 +45,16 @@ public class EnemyAI : MonoBehaviour
     {
         Locate();
 
-		if (navMash.enabled == false && Time.time > timeCap)
+		timeCap += Time.deltaTime;
+		if (navMash.enabled == false && timeCap > time)
 		{
-			timeCap = Time.time + time;
+			//timeCap = Time.time + time;
+			timeCap = 0;
             sfx.Play(); 
 			EnemyShot();
             
 		}
+		//Debug.Log("Time " + timeCap);
 	}
 
     // Looks for base unless it exists or the health is greater then 0
