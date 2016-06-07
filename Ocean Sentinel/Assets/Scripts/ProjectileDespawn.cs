@@ -18,8 +18,14 @@ public class ProjectileDespawn : MonoBehaviour
 	//Accesses the GameController script
 	GameController GC;
 
+	AudioSource Test;
+	public AudioClip[] Temp;
 
-	
+	void Awake()
+	{
+		Test = GetComponent<AudioSource>();
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -46,6 +52,7 @@ public class ProjectileDespawn : MonoBehaviour
 		//Checks if this game object collided with another that has the Enemy tag
 		if(col.gameObject.tag == "Enemy")
 		{
+			Test.PlayOneShot(Temp[0]);
             GC.PlaySound();
             // Makes an explosion at the enemies position
             GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
