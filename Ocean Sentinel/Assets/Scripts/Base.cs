@@ -50,12 +50,18 @@ public class Base : MonoBehaviour
         if (HP <= 0)
         {
             HP = 0;
-            GC.GameOver();
+            Instantiate(Resources.Load("Explosion", typeof(GameObject)), transform.position, transform.rotation);
+            Destroy(gameObject.GetComponent<MeshRenderer>());
+            StartCoroutine(Wait(3));
         }
-
-
-
     }
+
+    private IEnumerator Wait(float a)
+    {
+        yield return new WaitForSeconds(a);
+        GC.GameOver();
+    }
+
     //Looks for in comming collider with sposific tag then does STUFF
     void OnTriggerEnter(Collider collision)
     {

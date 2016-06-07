@@ -47,6 +47,8 @@ public class ProjectileDespawn : MonoBehaviour
 		if(col.gameObject.tag == "Enemy")
 		{
             GC.PlaySound();
+            // Makes an explosion at the enemies position
+            Instantiate(Resources.Load("Explosion", typeof(GameObject)), col.transform.position, col.transform.rotation);
             //Destroys this game object
             Destroy(gameObject);
 			//Destroys the game object that this one collided with
