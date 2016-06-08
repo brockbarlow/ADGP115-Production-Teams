@@ -24,30 +24,19 @@ public class PlayerMovement : MonoBehaviour
 	private float nextProjectile;
 	//Accesses the Base class
 	Base Defend;
-	//Creates access for a public AudioClip
-	public AudioClip ProjectileShoot;
-	//Accesses the object's AudioSource
-	AudioSource sfx;
 	//Used for accessing a child of this game object
 	GameObject Ship;
-
-	GameObject Temp;
-
-	Transform Temp2;
+	//Provides access to the Game Controller script
+	GameController GC;
 
 	//
 	void FireProjectile()
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
 		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
-		//AudioSource sfx = GetComponent<AudioSource>();
 		
-		//Sets the audio clip in the object's audio source to ProjectileShoot
-		sfx.clip = ProjectileShoot;
-
-		sfx.volume = 0.45f;
-		sfx.pitch = 1.5f;
-
+		//Performs the PlaySound function from the GameController script on instantiation
+		GC.PlaySound(2, 0.45f, 1.5f);
 		//sfx.clip = Resources.Load("Shot3", typeof(AudioClip)) as AudioClip;
 		//
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
@@ -63,20 +52,16 @@ public class PlayerMovement : MonoBehaviour
 
 		//Applies a force to the game object that changes the magnitude and direction
 		rbShot.AddForce(transform.right * projectileVelocity, ForceMode.Force);
-
-		//Plays an audio clip whenever a projectile is instantiated
-		sfx.Play();
-		//Debug.Log(sfx.clip);
 	}
 
 	void Start()
 	{
+		GC = FindObjectOfType<GameController>();
 		newVelocity = 1.0f;
 		newRate = 1.0f;
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
 		Defend = FindObjectOfType<Base>();
-		sfx = GetComponent<AudioSource>();
         ES = FindObjectOfType<EventSystem>();
 		Ship = GameObject.Find("ShipGRP");
 	}

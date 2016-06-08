@@ -201,9 +201,11 @@ public class GameController : MonoBehaviour {
         }   
     }
 
-    public void PlaySound(int a)
+    public void PlaySound(int a, float audioLevels, float audioPitch)
     {
         SFX.clip = listOfAudio[a];
+		SFX.volume = audioLevels;
+		SFX.pitch = audioPitch;
         SFX.Play();
     }
 }
