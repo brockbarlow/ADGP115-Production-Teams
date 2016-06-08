@@ -23,6 +23,12 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject Leader;
 
+    // Use for playing audio.
+    [SerializeField]
+    private AudioClip[] listOfAudio;
+
+    private AudioSource SFX;
+
     // This is the number of enemies that will be spawned.
     private float numbEnemies;
     // This is the amount of time between each enemy being spawned.
@@ -89,6 +95,8 @@ public class GameController : MonoBehaviour {
         UIButton4.SetActive(false);
         SkipButton.SetActive(false);
         ControllerSelect.SetActive(false);
+
+        SFX = GetComponent<AudioSource>();
 
         StartCoroutine(SpawnWaves());
 	}
@@ -193,8 +201,9 @@ public class GameController : MonoBehaviour {
         }   
     }
 
-    public void PlaySound()
+    public void PlaySound(int a)
     {
-        GetComponent<AudioSource>().Play();
+        SFX.clip = listOfAudio[a];
+        SFX.Play();
     }
 }
