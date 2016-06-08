@@ -46,7 +46,6 @@ public class ControllerRect : MonoBehaviour {
             // Sets hold to false, implying the player is holding the stick down.
             Hold = false;
             // Shows the currently selected button.
-            Debug.Log(Counter);
             Buttons[Counter].GetComponent<Button>().Select();
         }
 
