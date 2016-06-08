@@ -39,14 +39,15 @@ public class ControllerRect : MonoBehaviour {
             {
                 Counter++;
             }
-            if (Counter > Buttons.Length) { Counter = 0; }
+            if (Counter > (Buttons.Length - 1)) { Counter = 0; }
             if (Counter < 0) { Counter = 0; }
             // -----------------------------------------------
 
-            // Shows the currently selected button.
-            Buttons[Counter].GetComponent<Button>().Select();
             // Sets hold to false, implying the player is holding the stick down.
             Hold = false;
+            // Shows the currently selected button.
+            Debug.Log(Counter);
+            Buttons[Counter].GetComponent<Button>().Select();
         }
 
         // Returns the hold to true when the player stops holding the joystick down.
@@ -58,7 +59,6 @@ public class ControllerRect : MonoBehaviour {
         // Presses the currently selected button.
         if (Input.GetButtonDown("A"))
         {
-			//Buttons[Counter].GetComponent<Button>().onClick.Invoke();
 			Buttons[Counter].GetComponent<Button>().Select();
         }
 	}
