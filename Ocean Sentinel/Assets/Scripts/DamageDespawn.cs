@@ -12,17 +12,20 @@ public class DamageDespawn : MonoBehaviour
 {
 	//Accesses the Base and creates an object from it
 	Base Objective;
+	public GameController GC;
 	//
 	float damage = 10.0f;
 
 	//Called when the object's collider trigger enters another collider 
 	void OnTriggerEnter(Collider col)
 	{
+		GC = FindObjectOfType<GameController>();
 		//Allows for access to all values in the the Base.cs script
 		Objective = FindObjectOfType<Base>();
 		//Checks the tag of the object the Collider is attached to
 		if (col.gameObject.tag == "Base")
 		{
+			GC.PlaySound(1, 0.8f, 1);
 			//Destroys this instance of the object
 			Destroy(gameObject);
 			
@@ -35,7 +38,7 @@ public class DamageDespawn : MonoBehaviour
 			}
 
 			//Checks if the Armor value is less than or equal to zero
-			else if (Objective.Armor <= 0)
+			else if (Objective.Armor <= 0 && Objective.HP > 0)
 			{
 				//Decrements the value of HP by damage
 				Objective.HP -= damage;

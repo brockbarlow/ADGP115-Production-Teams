@@ -20,8 +20,6 @@ public class Base : MonoBehaviour
     public float Armor;
     // The GameController.
     public GameController GC;
-    //referes to a game audio sorce with a clip in the gameopbject
-    AudioSource hitAudio;
     // Stops the check for losing
     private bool Stop;
 
@@ -32,7 +30,6 @@ public class Base : MonoBehaviour
     {
 
         GC = FindObjectOfType<GameController>();
-        hitAudio = gameObject.GetComponent<AudioSource>();
         max_HP = 300;
         max_Armor = 200;
         HP = max_HP;
@@ -65,12 +62,5 @@ public class Base : MonoBehaviour
     {
         yield return new WaitForSeconds(a);
         GC.GameOver();
-    }
-
-    //Looks for in comming collider with sposific tag then does STUFF
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "Projectile")
-            hitAudio.Play();
     }
 }

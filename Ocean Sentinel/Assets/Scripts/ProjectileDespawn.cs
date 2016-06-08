@@ -18,14 +18,6 @@ public class ProjectileDespawn : MonoBehaviour
 	//Accesses the GameController script
 	GameController GC;
 
-	AudioSource Test;
-	public AudioClip[] Temp;
-
-	void Awake()
-	{
-		Test = GetComponent<AudioSource>();
-	}
-
 	// Update is called once per frame
 	void Update ()
 	{
@@ -53,7 +45,7 @@ public class ProjectileDespawn : MonoBehaviour
 		if(col.gameObject.tag == "Enemy")
 		{
 			//Test.PlayOneShot(Temp[0]);
-            GC.PlaySound(0);
+            GC.PlaySound(0, 0.75f, 1);
             // Makes an explosion at the enemies position
             GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
             explosion.transform.position = col.transform.position;
@@ -68,16 +60,12 @@ public class ProjectileDespawn : MonoBehaviour
 		//Checks if the tag of the object the Collider is attached to is Projectile
 		if (col.gameObject.tag == "Projectile")
 		{
-
+			GC.PlaySound(1, 0.5f, 1);
 			Destroy(gameObject);
 			//Destroys the object with the Projectile tag
 			Destroy(col.gameObject);
 			//Outputs to the Unity Console if triggered
 			//Debug.Log("Both Destroyed");
 		}
-		//if(col.gameObject.tag == "Player")
-		//{
-		//	Debug.Log("Hit the player.");
-		//}
 	}
 }
