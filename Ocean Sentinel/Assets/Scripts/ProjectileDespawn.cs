@@ -52,8 +52,8 @@ public class ProjectileDespawn : MonoBehaviour
 		//Checks if this game object collided with another that has the Enemy tag
 		if(col.gameObject.tag == "Enemy")
 		{
-			Test.PlayOneShot(Temp[0]);
-            GC.PlaySound();
+			//Test.PlayOneShot(Temp[0]);
+            GC.PlaySound(0);
             // Makes an explosion at the enemies position
             GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
             explosion.transform.position = col.transform.position;
