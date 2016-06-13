@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private EventSystem ES;
+    //[SerializeField]
+    //private EventSystem ES;
 	//The speed at which the player will move
 	public float MoveVelocity;
 	//A constant value that's used as the base speed for the player to move
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 		//Performs the PlaySound function from the GameController script on instantiation
 		GC.PlaySound(2, 0.45f, 1.5f);
 		
-		//
+		//Accesses the rigidbody of the game object
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		//Places the new game object relative to the player object
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
 		Defend = FindObjectOfType<Base>();
-        ES = FindObjectOfType<EventSystem>();
+        //ES = FindObjectOfType<EventSystem>();
 		Ship = GameObject.Find("ShipGRP");
 	}
 
@@ -75,11 +75,7 @@ public class PlayerMovement : MonoBehaviour
 			projectileRate = 0.0625f;
 		}
 
-
-
-		//All movement should be in a circular motion around a game object designated as the base
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
-
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
 		
 		//Sets up movent to allow for a limited distance the player can move away from the base
@@ -89,7 +85,8 @@ public class PlayerMovement : MonoBehaviour
 		//Float that's used to determine the amount of time inbetween each shot.
 		nextProjectile += Time.deltaTime;
 
-		if (Time.deltaTime != 0)
+		//Used to prevent the player from moving while the game is paused
+		if (Time.deltaTime != 0 && GC.Doit == true)
 		{
 			//Cirularizes the player's movement to be around the base game object
 			transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
@@ -107,22 +104,24 @@ public class PlayerMovement : MonoBehaviour
 			{
 				distanceControl.Move(radialMotion);
 			}
-			if (Input.GetButton("Fire1") && nextProjectile > projectileRate && ES.currentSelectedGameObject == null)
+
+			if (Input.GetButton("Fire1") && nextProjectile > projectileRate/* && ES.currentSelectedGameObject == null*/)
 			{
 				nextProjectile = 0;
 				FireProjectile();
 			}
-		}
-		//Changes the Ship object's localRotation about the Y-axis to 180
-		if (Input.GetAxis("Horizontal") > 0 && Ship.transform.rotation.y < 1)
-		{
-			Ship.transform.localRotation = Quaternion.Euler(0, 180, 0);
-		}
+			
+			//Changes the Ship object's localRotation about the Y-axis to 180
+			if (Input.GetAxis("Horizontal") > 0 && Ship.transform.rotation.y < 1)
+			{
+				Ship.transform.localRotation = Quaternion.Euler(0, 180, 0);
+			}
 
-		//Changes the Ship object's localRotation about the Y-axis to 0
-		if(Input.GetAxis("Horizontal") < 0 && Ship.transform.rotation.y > -1)
-		{
-			Ship.transform.localRotation = Quaternion.Euler(0, 0, 0);
+			//Changes the Ship object's localRotation about the Y-axis to 0
+			if(Input.GetAxis("Horizontal") < 0 && Ship.transform.rotation.y > -1)
+			{
+				Ship.transform.localRotation = Quaternion.Euler(0, 0, 0);
+			}
 		}
 	}
 }
