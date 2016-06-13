@@ -40,7 +40,7 @@ public class ControllerRect : MonoBehaviour {
                 Counter++;
             }
             if (Counter > (Buttons.Length - 1)) { Counter = 0; }
-            if (Counter < 0) { Counter = 0; }
+            if (Counter < 0) { Counter = (Buttons.Length - 1); }
             // -----------------------------------------------
 
             // Sets hold to false, implying the player is holding the stick down.
