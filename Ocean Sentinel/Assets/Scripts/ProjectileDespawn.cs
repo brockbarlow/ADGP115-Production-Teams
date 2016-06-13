@@ -13,7 +13,7 @@ public class ProjectileDespawn : MonoBehaviour
 {
 	//Empty value that's used for despawning the projectile
 	float projectileTime;
-	//
+	//An arbitrary value that's used when an enemy object is destroyed
 	float enemyDrop = 20.0f;
 	//Accesses the GameController script
 	GameController GC;
