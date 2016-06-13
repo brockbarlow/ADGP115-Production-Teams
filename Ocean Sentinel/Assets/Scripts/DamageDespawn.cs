@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 //This script is used for despawning the connected object
-//It perfoms trigger checks to destroy it and decrement values associated with the Base class
+//It performs trigger checks to destroy it and decrement values associated with the Base class
 
 public class DamageDespawn : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class DamageDespawn : MonoBehaviour
 			}
 		}
 
-		//Checks if the Collider is attached to a game object with the player tag
+		//Checks if the Collider is attached to a gameobject with the player tag
 		else if (col.gameObject.tag == "Player")
 		{
 			Destroy(gameObject);
