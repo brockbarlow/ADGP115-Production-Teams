@@ -38,15 +38,14 @@ public class ProjectileDespawn : MonoBehaviour
 	//Called when the Collider col enters this object's trigger
 	void OnTriggerEnter(Collider col)
 	{
-		//Alloows for access to all values in the GameController.cs script
+		//Allows for access to all values in the GameController.cs script
 		GC = FindObjectOfType<GameController>();
 
 		//Checks if this game object collided with another that has the Enemy tag
 		if(col.gameObject.tag == "Enemy")
 		{
-			//Test.PlayOneShot(Temp[0]);
             GC.PlaySound(0, 0.75f, 1);
-            // Makes an explosion at the enemies position
+            // Makes an explosion at the enemy's position
             GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
             explosion.transform.position = col.transform.position;
             //Destroys this game object
