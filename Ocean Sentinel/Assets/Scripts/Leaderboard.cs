@@ -68,7 +68,7 @@ public class Leaderboard : MonoBehaviour {
             // Instantiates a Score's UI element.
             Text UIElement = Instantiate(text, text.transform.position, text.transform.rotation) as Text;
             // Parent the UI element to the canvas.
-            UIElement.transform.parent = Can.transform;
+            UIElement.transform.SetParent(Can.transform);
             // Changes the position of the UI element on the canvas.
             UIElement.transform.position = new Vector3(UIElement.transform.position.x, UIElement.transform.position.y - 60 * Distance, UIElement.transform.position.z);
             // Changes what the UI element's text says to the score.
