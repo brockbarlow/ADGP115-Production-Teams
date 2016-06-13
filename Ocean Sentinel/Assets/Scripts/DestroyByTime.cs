@@ -12,6 +12,6 @@ public class DestroyByTime : MonoBehaviour {
     void Start()
     {
         // Wait for half a second.....Kill myself
-        Destroy(gameObject, .5f);
+        Destroy(gameObject, 2f);
     }
 }

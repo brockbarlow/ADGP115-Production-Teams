@@ -73,6 +73,8 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject SkipButton;
     [SerializeField]
+    private GameObject upgrades;
+    [SerializeField]
     private GameObject ControllerSelect;
     [SerializeField]
     private GameObject TheBase;
@@ -89,12 +91,7 @@ public class GameController : MonoBehaviour {
         Doit = true;
         Ready = false;
 
-        UIButton1.SetActive(false);
-        UIButton2.SetActive(false);
-        UIButton3.SetActive(false);
-        UIButton4.SetActive(false);
-        SkipButton.SetActive(false);
-        ControllerSelect.SetActive(false);
+        TurnUIOff();
 
         SFX = GetComponent<AudioSource>();
 
@@ -113,12 +110,7 @@ public class GameController : MonoBehaviour {
 
         if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0 && Doit && Ready)
         {
-            UIButton1.SetActive(true);
-            UIButton2.SetActive(true);
-            UIButton3.SetActive(true);
-            UIButton4.SetActive(true);
-            SkipButton.SetActive(true);
-            ControllerSelect.SetActive(true);
+            TurnUIOn();
             GameObject.Find("upgrades").GetComponent<Upgrades>().Active = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().MoveVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newVelocity;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().projectileRate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().newRate;
@@ -127,7 +119,8 @@ public class GameController : MonoBehaviour {
             Ready = false;
             if (numbWaves == 6)
             {
-                YouWin();
+                TurnUIOff();
+                StartCoroutine(Wait(2));
             }
         }
     }
@@ -139,12 +132,7 @@ public class GameController : MonoBehaviour {
             while (spawnWave)
             {
                 int g = 0;
-                UIButton1.SetActive(false);
-                UIButton2.SetActive(false);
-                UIButton3.SetActive(false);
-                UIButton4.SetActive(false);
-                SkipButton.SetActive(false);
-                ControllerSelect.SetActive(false);
+                TurnUIOff();
             // Increase the wave count.
             numbWaves++;
 
@@ -168,6 +156,28 @@ public class GameController : MonoBehaviour {
                 // Pause the couroutine.
                 spawnWave = false;
             }
+    }
+
+    private void TurnUIOff()
+    {
+        UIButton1.SetActive(false);
+        UIButton2.SetActive(false);
+        UIButton3.SetActive(false);
+        UIButton4.SetActive(false);
+        SkipButton.SetActive(false);
+        ControllerSelect.SetActive(false);
+        upgrades.SetActive(false);
+    }
+
+    private void TurnUIOn()
+    {
+        UIButton1.SetActive(true);
+        UIButton2.SetActive(true);
+        UIButton3.SetActive(true);
+        UIButton4.SetActive(true);
+        SkipButton.SetActive(true);
+        ControllerSelect.SetActive(true);
+        upgrades.SetActive(true);
     }
 
     public void GameOver()
@@ -205,5 +215,11 @@ public class GameController : MonoBehaviour {
     {
 		SFX.pitch = audioPitch;
         SFX.PlayOneShot(listOfAudio[a], audioLevels);
+    }
+
+    private IEnumerator Wait(float a)
+    {
+        yield return new WaitForSeconds(a);
+        YouWin();
     }
 }
