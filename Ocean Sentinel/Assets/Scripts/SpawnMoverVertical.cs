@@ -27,16 +27,20 @@ public class SpawnMoverVertical : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//If leave is true, the object's Z-Coordinate will increase
-		if (leave == true && Time.deltaTime > 0)
+		//Checks if the deltaTime is greater than 0
+		if (Time.deltaTime > 0)
 		{
-			Lerp(0, 0, 0.4f);
-		}
+			//If leave is true, the object's Z-Coordinate will increase
+			if (leave == true)
+			{
+				Lerp(0, 0, 0.4f);
+			}
 
-		//If leave is false, the object's Z-Coordinate will decrease
-		if (leave == false && Time.deltaTime > 0)
-		{
-			Lerp(0, 0, -0.4f);
+			//If leave is false, the object's Z-Coordinate will decrease
+			if (leave == false)
+			{
+				Lerp(0, 0, -0.4f);
+			}
 		}
 
 		//If the object's Z-Coordinate, relative to its parent, is less than or equal to -10, set leave to true

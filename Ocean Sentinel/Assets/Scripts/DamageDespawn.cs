@@ -12,8 +12,9 @@ public class DamageDespawn : MonoBehaviour
 {
 	//Accesses the Base and creates an object from it
 	Base Objective;
+	//Accesses an object with the GameController script attached to it
 	public GameController GC;
-	//
+	//An arbitrary value that's used for certain triggers
 	float damage = 10.0f;
 
 	//Called when the object's collider trigger enters another collider 

@@ -96,15 +96,18 @@ public class PlayerMovement : MonoBehaviour
 			CharacterController distanceControl = GetComponent<CharacterController>();
 
 			//Checks the distance between the player and the base
-			//If the distance is less than four then the player can move with vertical input
+			//If the distance is less than the designated amount the player can freely move with vertical input
 			//But if the distance is greater than four then the player can only move towards the base
-			if (Vector3.Distance(Defend.transform.position, transform.position) < 6 ||
-				Vector3.Distance(Defend.transform.position, transform.position) > 6 &&
+			if (Vector3.Distance(Defend.transform.position, transform.position) < 6.5f ||
+				Vector3.Distance(Defend.transform.position, transform.position) > 6.5f &&
 				Input.GetAxis("Vertical") < 0)
 			{
 				distanceControl.Move(radialMotion);
 			}
 
+			//Checks for input and if the value of nextProjectile is greater than projectileRate
+			//Sets the value of nextProjectile to zero
+			//Executes the FireProjectile function
 			if (Input.GetButton("Fire1") && nextProjectile > projectileRate/* && ES.currentSelectedGameObject == null*/)
 			{
 				nextProjectile = 0;
