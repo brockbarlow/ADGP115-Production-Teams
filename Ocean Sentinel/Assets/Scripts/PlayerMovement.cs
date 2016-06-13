@@ -8,17 +8,15 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //[SerializeField]
-    //private EventSystem ES;
 	//The speed at which the player will move
 	public float MoveVelocity;
 	//A constant value that's used as the base speed for the player to move
 	public float newVelocity;
 	//The speed of projectiles that the player instantiates
 	public float projectileVelocity;
-	//A value that determines the amount of time inbetween each projectile
+	//A value that determines the amount of time in between each projectile
 	public float projectileRate;
-	//A constant value that's used as the base time inbetween each projectile
+	//A constant value that's used as the base time in between each projectile
 	public float newRate;
 	//A changing value that will be used to check if a projectile can be instantiated
 	private float nextProjectile;
@@ -38,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 		//Performs the PlaySound function from the GameController script on instantiation
 		GC.PlaySound(2, 0.45f, 1.5f);
 		
-		//Accesses the rigidbody of the game object
+		//Accesses the rigidbody of the gameobject
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
 
 		//Places the new game object relative to the player object
@@ -62,14 +60,13 @@ public class PlayerMovement : MonoBehaviour
 		MoveVelocity = newVelocity;
 		projectileRate = newRate;
 		Defend = FindObjectOfType<Base>();
-        //ES = FindObjectOfType<EventSystem>();
 		Ship = GameObject.Find("ShipGRP");
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//Limits the projectile rate to avoid projectiles
+		//Limits the projectile rate
 		if (projectileRate < 0.2)
 		{
 			projectileRate = 0.0625f;
@@ -82,10 +79,10 @@ public class PlayerMovement : MonoBehaviour
 		//Allows for movement of the Player gameObject using 'W' & 'S' or the 'up' & 'down' arrow keys
 		float adjustDistance = Input.GetAxis("Vertical") * MoveVelocity;
 		
-		//Float that's used to determine the amount of time inbetween each shot.
+		//Float that's used to determine the amount of time in between each shot.
 		nextProjectile += Time.deltaTime;
 
-		//Used to prevent the player from moving while the game is paused
+		//Used to prevent the player from moving and shooting while the game is paused
 		if (Time.deltaTime != 0 && GC.Doit == true)
 		{
 			//Cirularizes the player's movement to be around the base game object
@@ -108,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
 			//Checks for input and if the value of nextProjectile is greater than projectileRate
 			//Sets the value of nextProjectile to zero
 			//Executes the FireProjectile function
-			if (Input.GetButton("Fire1") && nextProjectile > projectileRate/* && ES.currentSelectedGameObject == null*/)
+			if (Input.GetButton("Fire1") && nextProjectile > projectileRate)
 			{
 				nextProjectile = 0;
 				FireProjectile();

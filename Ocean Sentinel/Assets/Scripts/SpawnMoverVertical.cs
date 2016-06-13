@@ -18,7 +18,7 @@ public class SpawnMoverVertical : MonoBehaviour
 
 	}
 
-	//Custom Lerp functiion by the project manager. The object's transform.position becomes a new Vector3 variable
+	//Custom Lerp function by the project manager. The object's transform.position becomes a new Vector3 variable
 	void Lerp(float a, float b, float c)
 	{
 		gameObject.transform.position = new Vector3(transform.position.x + a, transform.position.y + b, transform.position.z + c);
