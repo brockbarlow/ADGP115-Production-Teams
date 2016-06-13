@@ -28,13 +28,13 @@ public class SpawnMoverVertical : MonoBehaviour
 	void Update()
 	{
 		//If leave is true, the object's Z-Coordinate will increase
-		if (leave == true)
+		if (leave == true && Time.deltaTime > 0)
 		{
 			Lerp(0, 0, 0.4f);
 		}
 
 		//If leave is false, the object's Z-Coordinate will decrease
-		if (leave == false)
+		if (leave == false && Time.deltaTime > 0)
 		{
 			Lerp(0, 0, -0.4f);
 		}
