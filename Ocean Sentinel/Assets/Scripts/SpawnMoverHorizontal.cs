@@ -22,14 +22,14 @@ public class SpawnMoverHorizontal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (forth == true) //if the forth variable is equal to true, the game objects's x position will become positive over
+        if (forth == true && Time.deltaTime > 0) //if the forth variable is equal to true, the game objects's x position will become positive over
         {                  //time
-            Lerp(0.4f, 0, 0 * Time.deltaTime);
+            Lerp(0.4f, 0, 0);
         }       // x,  y,  z times time
 
-        if (back == true) //if the back variable is equal to true, the game object's x position will become negative over time.
+        if (back == true && Time.deltaTime > 0) //if the back variable is equal to true, the game object's x position will become negative over time.
         {
-            Lerp(-0.4f, 0, 0 * Time.deltaTime);
+            Lerp(-0.4f, 0, 0);
         }       // x,  y,  z  times time
 
         if (gameObject.transform.localPosition.x <= -29) //if the game object's x position is less than or equal to -29, set the 
