@@ -26,6 +26,11 @@ public class buttonFunctions : MonoBehaviour {
         SceneManager.LoadScene("Controls");
     }
 
+    public void viewCredits() //this function will load the Credits scene.
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void exitGame() //this function is used to exit the game (will only work when built as an exe)
     {
         Application.Quit();
