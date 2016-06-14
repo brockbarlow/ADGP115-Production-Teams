@@ -18,7 +18,7 @@ public class ProjectileDespawn : MonoBehaviour
 	//Accesses the GameController script
 	GameController GC;
 
-	// Update is called once per frame
+	//Update is called once per frame
 	void Update ()
 	{
 		//Adds the value of deltaTime to projectileTime
@@ -28,11 +28,8 @@ public class ProjectileDespawn : MonoBehaviour
 		if (projectileTime >= 2.0f)
 		{
 			//Destroys this game object
-			Destroy(this.gameObject);
-			
+			Destroy(this.gameObject);	
 		}
-		//Outputs the current value of projectileTime to the Unity Console
-		//Debug.Log("Projectile despawned. " + projectileTime);
 	}
 
 	//Called when the Collider col enters this object's trigger
@@ -45,7 +42,7 @@ public class ProjectileDespawn : MonoBehaviour
 		if(col.gameObject.tag == "Enemy")
 		{
             GC.PlaySound(0, 0.75f, 1);
-            // Makes an explosion at the enemy's position
+            //Makes an explosion at the enemy's position
             GameObject explosion = (GameObject)Instantiate(Resources.Load("Explosion", typeof(GameObject)));
             explosion.transform.position = col.transform.position;
             //Destroys this game object
@@ -63,8 +60,6 @@ public class ProjectileDespawn : MonoBehaviour
 			Destroy(gameObject);
 			//Destroys the object with the Projectile tag
 			Destroy(col.gameObject);
-			//Outputs to the Unity Console if triggered
-			//Debug.Log("Both Destroyed");
 		}
 	}
 }
