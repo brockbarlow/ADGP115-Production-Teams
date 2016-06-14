@@ -78,16 +78,18 @@ public class PlayerMovement : MonoBehaviour
 		{
 			//Cirularizes the player's movement to be around the base game object
 			transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
-			//Connects how the player will move with vertical input to their rotation
+			//Connects the vertical input to the player's local rotation
 			Vector3 radialMotion = transform.localRotation * new Vector3(adjustDistance, 0, 0);
 			CharacterController distanceControl = GetComponent<CharacterController>();
 
 			//Checks the distance between the player and the base
-			//If the distance is less than the designated amount the player can freely move with vertical input
-			//But if the distance is greater than four then the player can only move towards the base
-			if (Vector3.Distance(Defend.transform.position, transform.position) < 6.5f ||
+			//Creates a maximum and minimum distance the player can be from the base
+			if (Vector3.Distance(Defend.transform.position, transform.position) < 6.5f && 
+				Vector3.Distance(Defend.transform.position, transform.position) > 2 ||
 				Vector3.Distance(Defend.transform.position, transform.position) > 6.5f &&
-				Input.GetAxis("Vertical") < 0)
+				Input.GetAxis("Vertical") < 0 ||
+				Vector3.Distance(Defend.transform.position, transform.position) < 2 &&
+				Input.GetAxis("Vertical") > 0)
 			{
 				distanceControl.Move(radialMotion);
 			}
