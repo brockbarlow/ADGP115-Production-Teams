@@ -32,22 +32,16 @@ public class PlayerMovement : MonoBehaviour
 	{
 		//Instantiates a game object by loading a prefab located in the Resources folder
 		GameObject playerProjectile = (GameObject)Instantiate(Resources.Load("Projectile", typeof(GameObject)));
-		
 		//Performs the PlaySound function from the GameController script on instantiation
 		GC.PlaySound(2, 0.45f, 1.5f);
-		
 		//Accesses the rigidbody of the gameobject
 		Rigidbody rbShot = FindObjectOfType<Rigidbody>();
-
 		//Places the new game object relative to the player object
 		playerProjectile.transform.position = transform.position + transform.right;
-		
 		//Rotates the spawned projectile with the player object's movement.
 		playerProjectile.transform.localRotation = transform.rotation;
-		
 		//Rotates the spawned object an additional ninety degrees on the Y-Axis
 		playerProjectile.transform.Rotate(transform.rotation.z, transform.rotation.x, 90);
-
 		//Applies a force to the game object that changes the magnitude and direction
 		rbShot.AddForce(transform.right * projectileVelocity, ForceMode.Force);
 	}
@@ -74,11 +68,8 @@ public class PlayerMovement : MonoBehaviour
 
 		//Allows for movement of the Player gameObject using 'A' & 'D' or the 'left' & 'right' arrow keys
 		float Movement = Input.GetAxis("Horizontal") * MoveVelocity;
-		
-		//Sets up movent to allow for a limited distance the player can move away from the base
 		//Allows for movement of the Player gameObject using 'W' & 'S' or the 'up' & 'down' arrow keys
 		float adjustDistance = Input.GetAxis("Vertical") * MoveVelocity;
-		
 		//Float that's used to determine the amount of time in between each shot.
 		nextProjectile += Time.deltaTime;
 
@@ -87,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
 		{
 			//Cirularizes the player's movement to be around the base game object
 			transform.RotateAround(Defend.transform.position, Vector3.up, Movement * 4);
-
 			//Connects how the player will move with vertical input to their rotation
 			Vector3 radialMotion = transform.localRotation * new Vector3(adjustDistance, 0, 0);
 			CharacterController distanceControl = GetComponent<CharacterController>();
@@ -103,11 +93,11 @@ public class PlayerMovement : MonoBehaviour
 			}
 
 			//Checks for input and if the value of nextProjectile is greater than projectileRate
-			//Sets the value of nextProjectile to zero
-			//Executes the FireProjectile function
 			if (Input.GetButton("Fire1") && nextProjectile > projectileRate)
 			{
+				//Sets the value of nextProjectile to zero
 				nextProjectile = 0;
+				//Executes the FireProjectile function
 				FireProjectile();
 			}
 			
